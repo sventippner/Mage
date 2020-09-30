@@ -1,7 +1,5 @@
 from os import path, getenv
-
 from dotenv import load_dotenv
-
 from config import ROOT_DIR
 
 
