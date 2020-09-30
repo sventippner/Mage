@@ -1,21 +1,21 @@
 import os
+from pathlib import Path
 
 import discord
 from discord.ext import commands
 
 from utils.Secrets import Secrets
-from config import COGS_PATH
-import discord_mage.cogs
+from config import COGS_PATH, ROOT_DIR
 
 
 # returns names of cog modules
 def get_extensions(path):
-    if os.path.isdir(path):
+    if Path.exists(Path(f"{ROOT_DIR}/{path}")):
         # module extension are in format Django.cogs.Module
         # we have to convert slashes to points
         ext = str(path).replace('\\', '.')
         ext = str(ext).replace('/', '.')
-        for filename in os.listdir(path):
+        for filename in os.listdir(f"{ROOT_DIR}/{path}"):
             if filename.endswith('.py'):
                 if not filename.startswith('__init__'):
                     # return cog module name
@@ -36,9 +36,7 @@ def main():
     load_modules(client, COGS_PATH)
 
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
-    client.add_cog(discord_mage.cogs.Test(client))
     client.run(DISCORD_TOKEN)
-
 
 
 if __name__ == '__main__':
