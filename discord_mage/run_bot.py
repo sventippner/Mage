@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 
 from utils.Secrets import Secrets
-from config import COGS_PATH, ROOT_DIR
+from config import COGS_PATHS, ROOT_DIR
 
 
 # returns names of cog modules
@@ -23,17 +23,18 @@ def get_extensions(path):
 
 
 # loads cog modules into client
-def load_modules(client, path):
-    for ext in get_extensions(path):
-        print(f"load {ext}...", end=" ")
-        client.load_extension(ext)
-        print("success")
+def load_modules(client, paths):
+    for path in paths:
+        for ext in get_extensions(path):
+            print(f"load {ext}...", end=" ")
+            client.load_extension(ext)
+            print("success")
 
 
 def main():
     client = discord.ext.commands.Bot(command_prefix='!')
 
-    load_modules(client, COGS_PATH)
+    load_modules(client, COGS_PATHS)
 
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
     client.run(DISCORD_TOKEN)
