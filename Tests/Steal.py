@@ -3,8 +3,8 @@ from mage.models.User import User
 
 
 def test():
-    user1 = User("Max", 100)
-    user2 = User("Moritz", 100)
+    user1 = User(1, 123456789, 100)
+    user2 = User(2, 123456789, 100)
 
     Steal().action(user1, user2)
 
