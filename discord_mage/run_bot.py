@@ -8,8 +8,11 @@ from utils.Secrets import Secrets
 from config import COGS_PATHS, ROOT_DIR
 
 
-# returns names of cog modules
 def get_extensions(path):
+    """ yields extensions found in the path folder
+
+    :param path: is the path to the extensions folder
+    """
     if Path.exists(Path(f"{ROOT_DIR}/{path}")):
         # module extension are in format Django.cogs.Module
         # we have to convert slashes to points
@@ -22,8 +25,12 @@ def get_extensions(path):
                     yield str(f"{ext}.{filename[:-3]}")
 
 
-# loads cog modules into client
-def load_modules(client, paths):
+def load_extensions(client, paths):
+    """ Loads cog extensions into the discord bot client
+
+    :param client: is the discord bot
+    :param path: is the path to the cogs folder
+    """
     for path in paths:
         for ext in get_extensions(path):
             print(f"load {ext}...", end=" ")
@@ -34,7 +41,7 @@ def load_modules(client, paths):
 def main():
     client = discord.ext.commands.Bot(command_prefix='!')
 
-    load_modules(client, COGS_PATHS)
+    load_extensions(client, COGS_PATHS)
 
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
     client.run(DISCORD_TOKEN)
