@@ -1,5 +1,5 @@
 from mage.items.Steal import Steal
-from mage.models.User import User
+from mage.models.User_old import User
 
 
 def test():
