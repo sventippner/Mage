@@ -1,6 +1,25 @@
+from mongoengine import Document, IntField, StringField, ListField
 
 
-class Item:
+# todo: Category
+# todo: id
+# todo: command
 
-    def __init__(self, name):
-        self.name = name
+class Item(Document):
+    """ Item
+
+    :param name: Name
+    :param price: Price
+    :param category: Category
+    :param brief_description: The short help text.
+    :param long_description: Description of the item.
+    """
+
+    name = StringField()
+    price = IntField()
+    category = ListField(StringField())
+    brief_description = StringField()
+    long_description = StringField()
+
+    def __init__(self):
+        pass
