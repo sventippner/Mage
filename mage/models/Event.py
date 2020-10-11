@@ -15,7 +15,3 @@ class Event(Document):
     end_date = DateTimeField()
     duration = DateTimeField()
     reward = StringField()
-
-    def __init__(self):
-        pass
-

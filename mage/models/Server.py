@@ -16,6 +16,3 @@ class Server(Document):
     date_joined = DateField()
     bot_prefix = StringField(min_length=1, max_length=3)
     announcement_channel_id = StringField(regex=r"\d")
-
-    def __init__(self):
-        pass
