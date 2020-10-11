@@ -1,2 +1,0 @@
-A model contains representative data of an object.
-For example, a "User" has a Discord id, points and items.

@@ -11,13 +11,14 @@ class User(Document):
     :param pvp_status: numeric flag of pvp status
     """
     discord_user_id = StringField(regex=r"\d")
-    discord_guild_id = ListField(StringField(regex=r"\d"))
+    discord_guild_id = StringField(regex=r"\d")
     points = LongField()
     items = ListField(IntField())
     pvp_status = IntField()
 
-    def __init__(self):
-        pass
+    def __init__(self, points=0, *args, **kwargs):
+        super(User, self).__init__(*args, **kwargs)
+        self.points = points
 
     def __str__(self):
         return f"User ID:{self.discord_user_id} ({self.points} Points)"

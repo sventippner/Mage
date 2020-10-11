@@ -20,6 +20,3 @@ class Item(Document):
     category = ListField(StringField())
     brief_description = StringField()
     long_description = StringField()
-
-    def __init__(self):
-        pass
