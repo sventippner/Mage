@@ -1,4 +1,6 @@
-from mongoengine import StringField, Document, LongField, IntField, ListField
+from mongoengine import StringField, Document, LongField, IntField, ListField, NotUniqueError
+
+from utils import data_access
 
 
 class User(Document):
@@ -16,9 +18,42 @@ class User(Document):
     items = ListField(IntField())
     pvp_status = IntField()
 
+    meta = {
+        'indexes': [
+            {'fields': ('discord_user_id', 'discord_guild_id'), 'unique': True}
+        ]
+    }
+
     def __init__(self, points=0, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         self.points = points
+
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+            return True
+        except NotUniqueError:
+            raise NotUniqueError(f"User already exists.")
+            return False
+
+    def find(self, **kwargs):
+        return self.objects(**kwargs)
+
+    def delete_this(self):
+        """ Deletes self document
+
+        :return: Amount of deleted documents
+        """
+        return User.objects(
+            discord_user_id=self.discord_user_id,
+            discord_guild_id=self.discord_guild_id
+        ).delete()
+
+    def update(self, **kwargs):
+        return User.objects(
+            discord_user_id=self.discord_user_id,
+            discord_guild_id=self.discord_guild_id
+        ).update(**kwargs)
 
     def __str__(self):
         return f"User ID:{self.discord_user_id} ({self.points} Points)"
