@@ -11,8 +11,10 @@ class Server(Document):
     :param date_joined: Date on which the bot joined the server.
     :param bot_prefix: Prefix for commands
     :param announcement_channel_id: Discord Channel Id for announcement messages.
+    :param moderation_channel_id: Discord Channel Id for moderation messages.
     """
     discord_guild_id = StringField(regex=r"\d")
     date_joined = DateField()
     bot_prefix = StringField(min_length=1, max_length=3)
     announcement_channel_id = StringField(regex=r"\d")
+    moderation_channel_id = StringField(regex=r"\d")
