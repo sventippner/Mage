@@ -40,10 +40,9 @@ def load_extensions(client, paths):
 
 def main():
     client = discord.ext.commands.Bot(command_prefix='!')
-
     load_extensions(client, COGS_PATHS)
-
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
+
     client.run(DISCORD_TOKEN)
 
 
