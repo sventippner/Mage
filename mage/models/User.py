@@ -55,5 +55,24 @@ class User(Document):
             discord_guild_id=self.discord_guild_id
         ).update(**kwargs)
 
+    @property
+    def level(self):
+        """
+        :return: level of user
+        """
+        # Level System with points
+        max_level = 100
+        # required points to reach level x is in level_generator[x]
+        level_generator = [round((x ** 2) / 3) for x in range(max_level + 1)]
+        level_generator[0] = 0  # ignore level 0
+        level_generator[1] = 0  # default level users start with, 0 XP needed
+        current_points = self.points    # TODO update current points if needed??
+        level = 1
+        for i, needed_xp in enumerate(level_generator):
+            if current_points >= needed_xp:
+                level = i
+            else:
+                return level
+
     def __str__(self):
         return f"User ID:{self.discord_user_id} ({self.points} Points)"
