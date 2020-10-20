@@ -24,6 +24,8 @@ class User(Document):
         ]
     }
 
+    max_level = 100
+
     def __init__(self, points=0, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         self.points = points
@@ -49,21 +51,25 @@ class User(Document):
             discord_guild_id=self.discord_guild_id
         ).delete()
 
-    def update(self, **kwargs):
+    def update(self, upsert=True, **kwargs):
+        """ Updates this user
+
+        :param upsert: insert if document doesn’t exist (Default: True)
+        :param kwargs: Query Operations
+        :return: List with user
+        """
         return User.objects(
             discord_user_id=self.discord_user_id,
             discord_guild_id=self.discord_guild_id
-        ).update(**kwargs)
+        ).update_one(upsert=upsert, **kwargs)
 
     @property
     def level(self):
-        """
+        """ Level System with points
         :return: level of user
         """
-        # Level System with points
-        max_level = 100
         # required points to reach level x is in level_generator[x]
-        level_generator = [round((x ** 2) / 3) for x in range(max_level + 1)]
+        level_generator = [round((x ** 2) / 3) for x in range(self.max_level + 1)]
         level_generator[0] = 0  # ignore level 0
         level_generator[1] = 0  # default level users start with, 0 XP needed
         current_points = self.points    # TODO update current points if needed??

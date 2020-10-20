@@ -1,4 +1,6 @@
 from discord.ext import commands
+
+from discord_mage.listeners.OnMessage import OnMessage
 from discord_mage.listeners.OnReady import OnReady
 from discord_mage.listeners.OnCommandError import OnCommandError
 
@@ -22,6 +24,10 @@ class Listener(commands.Cog):
         :param error: raised error
         """
         await OnCommandError().call(context, error)
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        await OnMessage.call(self.client, message)
 
 
 def setup(client):
