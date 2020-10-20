@@ -4,6 +4,7 @@ from pathlib import Path
 import discord
 from discord.ext import commands
 
+from utils import data_access
 from utils.Secrets import Secrets
 from config import COGS_PATHS, ROOT_DIR
 
@@ -42,6 +43,8 @@ def main():
     client = discord.ext.commands.Bot(command_prefix='!')
     load_extensions(client, COGS_PATHS)
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
+
+    data_access.db_connect()
 
     client.run(DISCORD_TOKEN)
 

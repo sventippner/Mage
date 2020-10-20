@@ -1,5 +1,6 @@
 import mongoengine
 
+from mage.models.User import User
 from utils.Secrets import Secrets
 
 
@@ -16,10 +17,13 @@ def db_connect(db_name=None):
 
     see documentation: https://docs.mongoengine.org/guide/connecting.html
     """
+
     settings = Secrets()
     if db_name is None:
         db_name = settings.get("DATABASE_NAME")
     db_host = settings.get("DATABASE_HOST")
+    mongoengine.get_connection()
+
     mongoengine.connect(db_name, host=db_host)
 
 
@@ -69,3 +73,7 @@ def delete_all(model, **kwargs):
     :return: Number of deleted documents
     """
     return model.objects(**kwargs).delete()
+
+
+def find_user_by_discord_message(message):
+    return User.find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
