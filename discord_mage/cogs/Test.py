@@ -9,7 +9,7 @@ class Test(commands.Cog):
 
     @commands.command(aliases=Hello.aliases, brief=Hello.brief, description=Hello.description)
     async def hello(self, context):
-        await Hello().discord_call(context)
+        await Hello().call(context)
 
 
 def setup(client):

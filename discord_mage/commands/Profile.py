@@ -6,7 +6,7 @@ class Profile:
     brief = 'displays profile'
     description = 'displays your current account profile for this server'
 
-    async def discord_call(self, context, message):
+    async def call(self, context, message):
         """ this function is executed by a discord message """
         user = data_access.find_user_by_discord_message(message)
 

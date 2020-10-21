@@ -25,6 +25,10 @@ class User(Document):
     }
 
     max_level = 100
+    # required points to reach level x is in level_generator[x]
+    level_generator = [round((x ** 2) / 3) for x in range(max_level + 1)]
+    level_generator[0] = 0  # ignore level 0
+    level_generator[1] = 0  # default level users start with, 0 XP needed
 
     def __init__(self, points=0, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
@@ -68,13 +72,10 @@ class User(Document):
         """ Level System with points
         :return: level of user
         """
-        # required points to reach level x is in level_generator[x]
-        level_generator = [round((x ** 2) / 3) for x in range(self.max_level + 1)]
-        level_generator[0] = 0  # ignore level 0
-        level_generator[1] = 0  # default level users start with, 0 XP needed
+
         current_points = self.points    # TODO update current points if needed??
         level = 1
-        for i, needed_xp in enumerate(level_generator):
+        for i, needed_xp in enumerate(self.level_generator):
             if current_points >= needed_xp:
                 level = i
             else:
