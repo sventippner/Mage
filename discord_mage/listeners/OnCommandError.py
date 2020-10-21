@@ -3,25 +3,30 @@ from discord.ext import commands
 
 class OnCommandError:
 
-    async def call(self, context, error):
+    @staticmethod
+    async def call(context, error):
         if isinstance(error, commands.CommandNotFound):
-            await context.send(self.action_command_not_found())
+            await context.send(await OnCommandError.action_command_not_found())
         elif isinstance(error, commands.MissingRequiredArgument):
-            await context.send(self.action_missing_required_argument())
+            await context.send(await OnCommandError.action_missing_required_argument())
         elif isinstance(error, commands.MissingPermissions):
-            await context.send(self.action_missing_permissions())
+            await context.send(await OnCommandError.action_missing_permissions())
         else:
             # raise all other errors
-            self.action_raise_error(error)
+            OnCommandError.action_raise_error(error)
 
-    async def action_command_not_found(self):
+    @staticmethod
+    async def action_command_not_found():
         return "command not found"
 
-    async def action_missing_required_argument(self):
+    @staticmethod
+    async def action_missing_required_argument():
         return "Missing required argument(s)"
 
-    async def action_missing_permissions(self):
+    @staticmethod
+    async def action_missing_permissions():
         return "You are missing permissions to use this command."
 
-    def action_raise_error(self, error):
+    @staticmethod
+    def action_raise_error(error):
         raise error

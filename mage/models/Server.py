@@ -1,4 +1,8 @@
-from mongoengine import StringField, DateField, Document
+from mongoengine import StringField, DateField, Document, NotUniqueError, IntField
+from datetime import datetime
+import discord
+
+from config import DEFAULT_PREFIX
 
 
 # todo: events
@@ -13,8 +17,22 @@ class Server(Document):
     :param announcement_channel_id: Discord Channel Id for announcement messages.
     :param moderation_channel_id: Discord Channel Id for moderation messages.
     """
-    discord_guild_id = StringField(regex=r"\d")
-    date_joined = DateField()
-    bot_prefix = StringField(min_length=1, max_length=3)
-    announcement_channel_id = StringField(regex=r"\d")
-    moderation_channel_id = StringField(regex=r"\d")
+    discord_guild_id = IntField(unique=True)
+    date_joined = DateField(default=datetime.now())
+    bot_prefix = StringField(min_length=1, max_length=3, default=DEFAULT_PREFIX)
+    announcement_channel_id = IntField()
+    moderation_channel_id = IntField()
+
+    def __init__(self, guild: discord.Guild = None, *args, **kwargs):
+        super(Server, self).__init__(*args, **kwargs)
+        if guild:
+            self.discord_guild_id = guild.id
+
+    def delete_this(self):
+        """ Deletes self document
+
+        :return: Amount of deleted documents
+        """
+        return Server.objects(
+            discord_guild_id=self.discord_guild_id
+        ).delete()

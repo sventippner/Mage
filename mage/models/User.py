@@ -1,3 +1,4 @@
+import discord
 from mongoengine import StringField, Document, LongField, IntField, ListField, NotUniqueError
 
 from utils import data_access
@@ -12,11 +13,11 @@ class User(Document):
     :param items: list of items (item ids) the user has
     :param pvp_status: numeric flag of pvp status
     """
-    discord_user_id = StringField(regex=r"\d")
-    discord_guild_id = StringField(regex=r"\d")
-    points = LongField()
-    items = ListField(IntField())
-    pvp_status = IntField()
+    discord_user_id = IntField()
+    discord_guild_id = IntField()
+    points = LongField(default=0)
+    items = ListField(IntField(), default=[])
+    pvp_status = IntField(default=0)
 
     meta = {
         'indexes': [
@@ -30,11 +31,31 @@ class User(Document):
     level_generator[0] = 0  # ignore level 0
     level_generator[1] = 0  # default level users start with, 0 XP needed
 
-    def __init__(self, points=0, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
-        self.points = points
 
-    def save(self, *args, **kwargs):
+    @staticmethod
+    def from_discord(discord_user_id, guild_id):
+        u = User()
+        u.discord_user_id = discord_user_id
+        u.discord_guild_id = guild_id
+        return u
+
+    @staticmethod
+    def find(**kwargs):
+        return User.objects(**kwargs)
+
+    def delete_this(self):
+        """ Deletes self document
+
+        :return: Amount of deleted documents
+        """
+        return User.objects(
+            discord_user_id=self.discord_user_id,
+            discord_guild_id=self.discord_guild_id
+        ).delete()
+
+    def save_this(self, *args, **kwargs):
         """ Updates this user
 
         :param kwargs: Query Operations
@@ -47,20 +68,6 @@ class User(Document):
             ).update_one(upsert=True, **kwargs)
         except NotUniqueError:
             raise NotUniqueError(f"User already exists.")
-            return False
-
-    def find(self, **kwargs):
-        return self.objects(**kwargs)
-
-    def delete_this(self):
-        """ Deletes self document
-
-        :return: Amount of deleted documents
-        """
-        return User.objects(
-            discord_user_id=self.discord_user_id,
-            discord_guild_id=self.discord_guild_id
-        ).delete()
 
     @property
     def level(self):
@@ -68,7 +75,7 @@ class User(Document):
         :return: level of user
         """
 
-        current_points = self.points    # TODO update current points if needed??
+        current_points = self.points  # TODO update current points if needed??
         level = 1
         for i, needed_xp in enumerate(self.level_generator):
             if current_points >= needed_xp:

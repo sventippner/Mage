@@ -9,7 +9,7 @@ class Points(commands.Cog):
 
     @commands.command(aliases=Profile.aliases, brief=Profile.brief, description=Profile.description)
     async def profile(self, context):
-        await Profile().call(context)
+        await Profile.call(context)
 
 
 def setup(client):

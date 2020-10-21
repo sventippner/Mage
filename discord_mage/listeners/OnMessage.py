@@ -1,17 +1,23 @@
 from mage.models.User import User
+from utils import data_access
 
 
 class OnMessage:
     points_per_message = 1
 
-    async def call(self, client, message):
+    @staticmethod
+    async def call(message):
         # ignores its own messages
-        if message.author == client.user:
+        if message.author.bot:
             return
 
-#        author = User.find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
-#        self.action_increase_user_points(author)
+        author = data_access.find_user_by_discord_message(message)
+        if not author:
+            author = User.from_discord(message.author.id, message.guild.id)
+            author.save()
+        OnMessage.action_increase_user_points(author)
 
-    def action_increase_user_points(self, user):
-        user.points += self.points_per_message
-        user.update()
+    @staticmethod
+    def action_increase_user_points(user):
+        user.points += OnMessage.points_per_message
+        user.save_this(set__points=user.points)
