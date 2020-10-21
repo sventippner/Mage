@@ -35,9 +35,16 @@ class User(Document):
         self.points = points
 
     def save(self, *args, **kwargs):
+        """ Updates this user
+
+        :param kwargs: Query Operations
+        :return: List with user
+        """
         try:
-            super().save(*args, **kwargs)
-            return True
+            return User.objects(
+                discord_user_id=self.discord_user_id,
+                discord_guild_id=self.discord_guild_id
+            ).update_one(upsert=True, **kwargs)
         except NotUniqueError:
             raise NotUniqueError(f"User already exists.")
             return False
@@ -54,18 +61,6 @@ class User(Document):
             discord_user_id=self.discord_user_id,
             discord_guild_id=self.discord_guild_id
         ).delete()
-
-    def update(self, upsert=True, **kwargs):
-        """ Updates this user
-
-        :param upsert: insert if document doesn’t exist (Default: True)
-        :param kwargs: Query Operations
-        :return: List with user
-        """
-        return User.objects(
-            discord_user_id=self.discord_user_id,
-            discord_guild_id=self.discord_guild_id
-        ).update_one(upsert=upsert, **kwargs)
 
     @property
     def level(self):

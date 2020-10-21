@@ -27,7 +27,7 @@ class Listener(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        await OnMessage.call(self.client, message)
+        await OnMessage().call(self.client, message)
 
 
 def setup(client):
