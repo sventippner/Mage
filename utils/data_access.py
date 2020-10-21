@@ -22,7 +22,6 @@ def db_connect(db_name=None):
     if db_name is None:
         db_name = settings.get("DATABASE_NAME")
     db_host = settings.get("DATABASE_HOST")
-    mongoengine.get_connection()
 
     mongoengine.connect(db_name, host=db_host)
 
