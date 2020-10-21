@@ -39,7 +39,7 @@ def find(model, **kwargs):
 
 
 def find_one(model, **kwargs):
-    """ Searches for objects
+    """ Searches for object
 
     see documentation: https://docs.mongoengine.org/guide/querying.html#query-operators
 
@@ -47,7 +47,11 @@ def find_one(model, **kwargs):
     :param kwargs: see docs
     :return: first object found
     """
-    return find(model, **kwargs)[0]
+    m = find(model, **kwargs)
+    if m:
+        return m[0]
+    else:
+        return m
 
 
 def delete_first(model, **kwargs):
@@ -75,4 +79,8 @@ def delete_all(model, **kwargs):
 
 
 def find_user_by_discord_message(message):
-    return User.find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
+    u = User.find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
+    if u:
+        return u[0]
+    else:
+        return u
