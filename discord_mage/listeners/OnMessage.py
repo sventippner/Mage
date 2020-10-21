@@ -8,10 +8,9 @@ class OnMessage:
         # ignores its own messages
         if message.author == client.user:
             return
-        print(message.author.id)
-        print(message.guild.id)
-        # author = User().find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
-        # self.action_increase_user_points(author)
+
+#        author = User.find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
+#        self.action_increase_user_points(author)
 
     def action_increase_user_points(self, user):
         user.points += self.points_per_message
