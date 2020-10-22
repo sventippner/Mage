@@ -10,7 +10,7 @@ class Moderation(commands.Cog):
     @commands.command(brief=Purge.brief, description=Purge.description)
     @commands.has_permissions(manage_messages=True)
     async def purge(self, context, amount=2):
-        await Purge().call(context, amount)
+        await Purge.call(context, amount)
 
 
 def setup(client):
