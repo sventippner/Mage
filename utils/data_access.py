@@ -1,5 +1,6 @@
 import mongoengine
 
+from mage.models.Server import Server
 from mage.models.User import User
 from utils.Secrets import Secrets
 
@@ -84,3 +85,7 @@ def find_user_by_discord_message(message):
         return u[0]
     else:
         return u
+
+
+def get_prefix(guild_id):
+    return find_one(Server, discord_guild_id=guild_id).bot_prefix

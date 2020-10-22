@@ -3,7 +3,8 @@ class Purge:
     brief = 'deletes messages'
     description = 'deletes the last [amount] messages in the channel. Default value for amount is 2'
 
-    async def call(self, context, amount=2):
+    @staticmethod
+    async def call(context, amount=2):
         """ this function is executed by a discord message """
         if 0 < amount <= 50:
             await context.channel.purge(limit=amount)

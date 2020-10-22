@@ -4,9 +4,10 @@ from pathlib import Path
 import discord
 from discord.ext import commands
 
-from utils import data_access
+from mage.models.Server import Server
 from utils.Secrets import Secrets
 from config import COGS_PATHS, ROOT_DIR
+from utils.data_access import db_connect, get_prefix, find_one
 
 
 def get_extensions(path):
@@ -40,11 +41,11 @@ def load_extensions(client, paths):
 
 
 def main():
-    client = discord.ext.commands.Bot(command_prefix='!')
+    client = discord.ext.commands.Bot(command_prefix=lambda _, context: find_one(Server, discord_guild_id=context.guild.id).bot_prefix)
     load_extensions(client, COGS_PATHS)
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
 
-    data_access.db_connect()
+    db_connect()
 
     client.run(DISCORD_TOKEN)
 

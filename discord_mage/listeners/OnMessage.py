@@ -15,7 +15,8 @@ class OnMessage:
         if not author:
             author = User.from_discord(message.author.id, message.guild.id)
             author.save()
-        OnMessage.action_increase_user_points(author)
+        if not message.content.startswith(data_access.get_prefix(message.guild.id)):
+            OnMessage.action_increase_user_points(author)
 
     @staticmethod
     def action_increase_user_points(user):
