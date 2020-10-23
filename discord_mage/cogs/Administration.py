@@ -43,7 +43,7 @@ class Administration(commands.Cog):
         (if channel is not passed, the channel in which the command was sent in will become the moderationchannel instead)
         Admin permissions required
         :param context: context object automatically passed on function call
-        :param channel: announcementchannel
+        :param channel: moderationchannel
         """
         await SetModerationChannel.call(context, channel)
 
