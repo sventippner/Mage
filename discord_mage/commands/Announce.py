@@ -12,16 +12,15 @@ class Announce:
     async def call(context, client, message):
         announcement_channel_id = find_one(Server, discord_guild_id=context.guild.id).announcement_channel_id
         if announcement_channel_id:
-            channel = await client.fetch_channel(announcement_channel_id)
-            await channel.send(message + "\n@everyone")
-            await context.message.delete()
+            await Announce.action_announce(context, client, announcement_channel_id, message)
         else:
             await context.send(Announce.action_no_announcement_channel())
 
-
     @staticmethod
-    def action():
-        pass
+    async def action_announce(context, client, channel_id, message):
+        channel = client.get_channel(channel_id)
+        await channel.send(message + "\n@everyone")
+        await context.message.delete()
 
     @staticmethod
     def action_no_announcement_channel():
