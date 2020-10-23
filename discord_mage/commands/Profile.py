@@ -1,3 +1,4 @@
+from mage.models.User import User
 from utils import data_access
 
 
@@ -16,13 +17,14 @@ class Profile:
     @staticmethod
     def action(user):
         msg = f"Level: **{user.level}**"
-        if user.level == user.max_level:
+        if user.level == User.max_level:
             msg += " (MAX)"
 
         msg += f"\nPoints: **{user.points}**\n\n"
 
-        if user.level < user.max_level:
-            msg += "\nPoints needed for Level-Up: <Todo>"
+        if user.level < User.max_level:
+            points_needed = User.level_generator[user.level + 1] - user.points
+            msg += f"\nPoints needed for Level-Up: {points_needed}"
 
         if user.items:
             msg += f"\n**{len(user.items)} Items:**"

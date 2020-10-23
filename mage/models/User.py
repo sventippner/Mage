@@ -75,13 +75,14 @@ class User(Document):
         :return: level of user
         """
 
-        current_points = self.points  # TODO update current points if needed??
+        current_points = self.points
         level = 1
         for i, needed_xp in enumerate(self.level_generator):
             if current_points >= needed_xp:
                 level = i
             else:
                 return level
+        return level
 
     def __str__(self):
         return f"User ID:{self.discord_user_id} ({self.points} Points)"
