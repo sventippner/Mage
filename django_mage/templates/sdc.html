@@ -1,0 +1,46 @@
+{%  extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+
+
+    <table id="sdc_list" class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <td>Name</td>
+                <td>Output</td>
+                <td>Brief</td>
+                <td>Description</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+
+    {% for sdc in sdc_list %}
+        <tr class="sdc">
+            <td class="name">{{ sdc.name }}</td>
+            <td class="output">{{ sdc.output }}</td>
+            <td class="brief">{{ sdc.brief }}</td>
+            <td class="description">{{ sdc.description }}</td>
+            <td>
+                <button class="edit btn btn-secondary">Edit</button>
+                <a href="{% url 'del_sdc' name=sdc.name %}" class="btn btn-danger">Del</a>
+            </td>
+        </tr>
+    {% endfor %}
+
+    </table>
+
+    <button class="btn-toggle-data-form btn btn-primary">Add command</button>
+    <form id="data-form" action="" enctype="multipart/form-data" method="POST" class="form-row" style="display: none">
+        <div class="form-group">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-primary">Speichern</button>
+        </div>
+    </form>
+
+    <a href="{% url 'sdc_build' %}" class="btn btn-primary">Build</a>
+
+{% endblock %}
