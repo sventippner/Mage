@@ -1,0 +1,28 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_title }} : THBot</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+    {% include 'navigation.html' %}
+
+
+    <div id="page-content">
+        <h1>{{ page_title }}</h1>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

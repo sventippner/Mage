@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mage_admin.apps.MageAdminConfig',
+    'mage_admin',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,8 @@
 import os
 import sys
 
+from utils.data_access import db_connect
+
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +21,5 @@ def main():
 
 
 if __name__ == '__main__':
+    db_connect()
     main()
