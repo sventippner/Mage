@@ -1,18 +1,17 @@
-
 from django import forms
 
-from discord_mage.models.SimpleDiscordCommand import SimpleDiscordCommand
+from django_mage.mage_admin.models import SimpleDiscordCommand
 
 
-class SimpleDiscordCommandForm(forms.Form):
-    name = forms.CharField(max_length=30)
-    aliases = forms.CharField(max_length=30)
-    brief = forms.CharField(max_length=100)
-    description = forms.CharField(max_length=200)
+class SimpleDiscordCommandForm(forms.ModelForm):
+    #name = forms.CharField(max_length=30)
+    #aliases = forms.CharField(max_length=30)
+    #brief = forms.CharField(max_length=100)
+    #description = forms.CharField(max_length=200)
 
-    # class Meta:
-    #     model = SimpleDiscordCommand
-    #     exclude = ()
+    class Meta:
+        model = SimpleDiscordCommand
+        exclude = ()
 
     def to_document(self):
         # Converts this form to a SimpleDiscordCommand document

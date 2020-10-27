@@ -21,7 +21,8 @@ def sdc(request):
 
     if request.method == 'POST':
         print(request.POST)
-        #sdc = SimpleDiscordCommand.objects.filter(name=request.POST.get("name")).first()
+        sdc = SimpleDiscordCommand.objects.filter(name=request.POST.get("name")).first()
+        print(sdc)
         form = SimpleDiscordCommandForm(request.POST, instance=sdc)
         if form.is_valid():
             form.save()
