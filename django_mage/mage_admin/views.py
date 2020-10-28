@@ -2,8 +2,8 @@ import pathlib
 
 from django.shortcuts import render, redirect
 
-from discord_mage.models.SimpleDiscordCommand import SimpleDiscordCommand
 from django_mage.mage_admin.forms import SimpleDiscordCommandForm
+from django_mage.mage_admin.models import SimpleDiscordCommand
 from utils.SimpleCogsGenerator import SimpleCogsGenerator
 
 from config import ROOT_DIR, DJANGO_COGS_PATHS
@@ -20,9 +20,7 @@ def sdc(request):
     sdc_list = SimpleDiscordCommand.objects.all()
 
     if request.method == 'POST':
-        print(request.POST)
         sdc = SimpleDiscordCommand.objects.filter(name=request.POST.get("name")).first()
-        print(sdc)
         form = SimpleDiscordCommandForm(request.POST, instance=sdc)
         if form.is_valid():
             form.save()
