@@ -15,6 +15,7 @@ class User(Document):
     """
     discord_user_id = IntField()
     discord_guild_id = IntField()
+
     points = LongField(default=0)
     items = ListField(IntField(), default=[])
     pvp_status = IntField(default=0)
@@ -33,6 +34,7 @@ class User(Document):
 
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
+        self.name = "User"
 
     @staticmethod
     def from_discord(discord_user_id, guild_id):
@@ -83,6 +85,14 @@ class User(Document):
             else:
                 return level
         return level
+
+    def has_item(self, item_id):
+        """ Checks if user has the item
+
+        :param item_id: item id
+        :return: Boolean
+        """
+        return item_id in self.items
 
     def __str__(self):
         return f"User ID:{self.discord_user_id} ({self.points} Points)"
