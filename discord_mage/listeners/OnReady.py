@@ -1,12 +1,15 @@
 from discord_mage.listeners.OnGuildJoin import OnGuildJoin
+from discord_mage.tasks.ChangeStatus import ChangeStatus
 from utils import data_access
 from mage.models.Server import Server
+
 
 class OnReady:
 
     @staticmethod
     def call(client):
         OnReady.action_check_for_new_guilds(client)
+        OnReady.action_start_tasks(client)
         print(OnReady.action_login(client.user))
 
     @staticmethod
@@ -16,6 +19,10 @@ class OnReady:
             if not server:
                 server = Server(guild)
                 OnGuildJoin.action_save_server(server)
+
+    @staticmethod
+    def action_start_tasks(client):
+        ChangeStatus(client).call.start()
 
     @staticmethod
     def action_login(user):
