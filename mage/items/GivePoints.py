@@ -16,4 +16,4 @@ class GivePoints:
         user.save()
         target.save()
 
-        return f"{user.name} gibt {target.name} {amount} Punkte"  # Todo: change points name
+        # return f"{user.name} gibt {target.name} {amount} Punkte"  # Todo: change points name

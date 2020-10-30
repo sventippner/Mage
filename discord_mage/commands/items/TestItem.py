@@ -23,4 +23,4 @@ class TestItem:
         user_target.name = target.display_name
 
         result = GivePoints.action(user, user_target, amount)
-        await context.send(result)
+        await context.send(f"{context.author.display_name} gibt {target.display_name} {amount} Punkte")
