@@ -1,2 +1,0 @@
-An item has a event that can be triggered by a player.
-For example, if "Gamble" is used by a player, the player randomly loses or gains points.

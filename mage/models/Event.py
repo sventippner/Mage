@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, DateTimeField
+from mongoengine import Document, StringField, DateTimeField, IntField, ListField
 
 
 # todo: rewards
@@ -11,7 +11,15 @@ class Event(Document):
     :param reward = Rewards
     """
 
+    discord_guild_id = IntField()
+    name = StringField()
+
     start_date = DateTimeField()
     end_date = DateTimeField()
-    duration = DateTimeField()
-    reward = StringField()
+    # duration = DateTimeField()
+
+    # list of role ids
+    role_restriction = ListField(IntField())
+    participants = ListField(IntField())
+
+    reward = IntField()
