@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django_mage.mage_admin.views import bot_index, del_sdc, sdc_build, sdc
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', bot_index),
+    path('sdc/', sdc),
+    path('sdc/d/<str:name>/', del_sdc, name="del_sdc"),
+    path('sdc/build/', sdc_build, name="sdc_build")
 ]
