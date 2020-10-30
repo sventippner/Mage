@@ -82,7 +82,9 @@ def delete_all(model, **kwargs):
 def find_user_by_discord_message(message):
     u = User.find(discord_user_id=message.author.id, discord_guild_id=message.guild.id)
     if u:
-        return u[0]
+        user = u[0] # get first
+        user.name = message.author.display_name
+        return user
     else:
         return u
 

@@ -1,7 +1,5 @@
 from mongoengine import Document, IntField, StringField, ListField
 
-from mage import items
-from mage.Exceptions import ItemError
 
 # todo: Category
 # todo: id
