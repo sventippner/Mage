@@ -7,7 +7,7 @@ from discord.ext import commands
 from mage.models.Server import Server
 from utils.Secrets import Secrets
 from config import COGS_PATHS, ROOT_DIR
-from utils.data_access import db_connect, get_prefix, find_one
+from utils.data_access import db_connect, find_one
 
 
 def get_extensions(path):
