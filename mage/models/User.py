@@ -34,7 +34,7 @@ class User(Document):
 
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
-        self.name = "User"
+        self.name = ""
 
     @staticmethod
     def from_discord(discord_user_id, guild_id):

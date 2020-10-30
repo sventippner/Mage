@@ -23,6 +23,7 @@ class Test(commands.Cog):
     @commands.command()
     async def react(self, context):
         await context.message.add_reaction('\U0001f602')
+        await context.message.add_reaction('<:fat_laugh:718108247164452935>')
 
 
 
