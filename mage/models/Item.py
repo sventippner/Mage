@@ -1,9 +1,4 @@
-from mongoengine import Document, IntField, StringField, ListField
-
-
-# todo: Category
-# todo: id
-# todo: command
+from mongoengine import Document, IntField, StringField, ListField, BooleanField
 
 
 class Item(Document):
@@ -15,25 +10,22 @@ class Item(Document):
     :param category: Category
     :param brief: The short help text.
     :param description: Description of the item.
-    :param action: item function
+    :param is_event_item: boolean
+    :param is_shop_item: boolean
     """
 
     id = IntField()
-    name = StringField()
+    name = StringField(unique=True)
 
     price = IntField()
     category = ListField(StringField())
     brief = StringField()
     description = StringField()
+    is_event_item = BooleanField()
+    is_shop_item = BooleanField()
+    level_restriction = IntField()
 
-    """
-    action = StringField()
+    meta = {"allow_inheritance": True}
 
-    def action(self):
-        try:
-            method_to_call = getattr(items, self.action)
-            result = method_to_call()
-            return result
-        except Exception:
-            raise ItemError(f"Could not execute {self.name}.action()")
-    """
+    def __str__(self):
+        return f"{self.name} {self.brief} Price: {self.price}"

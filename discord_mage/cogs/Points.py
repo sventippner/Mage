@@ -19,5 +19,7 @@ class Points(commands.Cog):
         await AddPoints.call(context, member, amount)
 
 
+
+
 def setup(client):
     client.add_cog(Points(client))

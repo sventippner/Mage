@@ -2,12 +2,17 @@ from mage.models.Item import Item
 from mage.models.User import User
 
 
-class GivePoints:
+class GivePoints(Item):
+    name = "givepoints"
     aliases = ['item']
     brief = 'test item'
     description = ''
+    price = 20
 
     use_cost = 25
+
+    def __init__(self, *args, **kwargs):
+        super(Item, self).__init__(*args, **kwargs)
 
     @staticmethod
     def action(user: User, target: User, amount: int = 0):
@@ -15,5 +20,3 @@ class GivePoints:
         target.points += amount
         user.save()
         target.save()
-
-        # return f"{user.name} gibt {target.name} {amount} Punkte"  # Todo: change points name
