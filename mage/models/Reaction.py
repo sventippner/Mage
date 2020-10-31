@@ -1,14 +1,14 @@
-from mongoengine import Document, IntField, EmbeddedDocument, StringField, NotUniqueError
+from mongoengine import IntField, EmbeddedDocument, StringField, NotUniqueError
 
 
 class Reaction(EmbeddedDocument):
     emoji = StringField(required=True)
-    role = StringField(required=True)
+    role_id = IntField(required=True)
 
-    def __init__(self, emoji, role, *args, **kwargs):
+    def __init__(self, emoji, role_id, *args, **kwargs):
         super(Reaction, self).__init__(*args, **kwargs)
         self.emoji = emoji
-        self.role = role
+        self.role_id = role_id
 
 
     def save_this(self, *args, **kwargs):
@@ -20,7 +20,7 @@ class Reaction(EmbeddedDocument):
         try:
             return Reaction.objects(
                 emoji=self.emoji,
-                role=self.role
+                role=self.role_id
             ).update_one(upsert=True, **kwargs)
         except NotUniqueError:
             raise NotUniqueError(f"Reaction already exists.")
@@ -33,5 +33,5 @@ class Reaction(EmbeddedDocument):
         """
         return Reaction.objects(
             emoji=self.emoji,
-            role=self.role
+            role=self.role_id
         ).delete()

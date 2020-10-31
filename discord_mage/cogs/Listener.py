@@ -5,6 +5,7 @@ from discord_mage.listeners.OnMessage import OnMessage
 from discord_mage.listeners.OnReady import OnReady
 from discord_mage.listeners.OnCommandError import OnCommandError
 from discord_mage.listeners.OnGuildJoin import OnGuildJoin
+from discord_mage.listeners.OnRawReactionAdd import OnRawReactionAdd
 
 
 class Listener(commands.Cog):
@@ -33,7 +34,6 @@ class Listener(commands.Cog):
         """
         OnGuildRemove.call(guild)
 
-
     @commands.Cog.listener()
     async def on_command_error(self, context, error):
         """
@@ -46,6 +46,10 @@ class Listener(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         await OnMessage.call(message)
+
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self, reaction):
+        await OnRawReactionAdd.call(self.client, reaction)
 
 
 def setup(client):
