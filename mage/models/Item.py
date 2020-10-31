@@ -25,15 +25,7 @@ class Item(Document):
     is_shop_item = BooleanField()
     level_restriction = IntField()
 
+    meta = {"allow_inheritance": True}
 
-    """
-    action = StringField()
-
-    def action(self):
-        try:
-            method_to_call = getattr(items, self.action)
-            result = method_to_call()
-            return result
-        except Exception:
-            raise ItemError(f"Could not execute {self.name}.action()")
-    """
+    def __str__(self):
+        return f"{self.name} {self.brief} Price: {self.price}"
