@@ -1,0 +1,22 @@
+{%  extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <form id="data-form bot-settings-form" action="" enctype="multipart/form-data" method="POST" class="form-row" style="">
+        <div class="form-group">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-primary">Speichern</button>
+        </div>
+    </form>
+
+
+    <h2>bot settings</h2>
+    <ul><li>bot owner list</li><li>item list</li></ul>
+
+    <h2>Generated Commands Settings</h2>
+    <ul><li>sdc path</li><li>sdc name</li></ul>
+
+    <h2>Server Settings</h2>
+    <ul><li>(server id)</li><li>bot owner</li><li>prefix</li><li>points name</li><li>Items<ul><li>activated</li><li>shop</li><li>cost</li></ul></li></ul>
+{% endblock %}
