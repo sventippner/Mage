@@ -1,7 +1,8 @@
+import discord
 from discord.ext import commands
 
-from discord_mage.commands.reactions.MakeDistinctRoleButtons import MakeDistinctRoleButtons
-from discord_mage.commands.reactions.MakeRoleButtons import MakeRoleButtons
+from discord_mage.commands.reactions.buttons.distinctbuttons.MakeDistinctRoleButtons import MakeDistinctRoleButtons
+from discord_mage.commands.reactions.buttons.makebuttons.MakeRoleButtons import MakeRoleButtons
 
 
 class Reactions(commands.Cog):
