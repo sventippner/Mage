@@ -5,21 +5,23 @@ from mage.models.Reaction import Reaction
 from utils import data_access
 
 
-class MakeRoleButtons:
-    aliases = ['makebuttons', 'makerolebuttons']
-    brief = "members can toggle roles"
-    description = "creates emoji buttons (reactions) below the message. Members can toggle roles upon reaction."
+class ButtonMaker():
+    aliases = []
+    brief = ""
+    description = ""
 
-    @staticmethod
-    async def call(context, client, message_id, *args):
+    is_distinct = False
+
+    @classmethod
+    async def call(cls, context, client, message_id, *args):
         if len(args) % 2 != 0:
-            await context.send(MakeRoleButtons.action_wrong_input())
+            await context.send(ButtonMaker.action_wrong_input())
         else:
-            new_reactions = await MakeRoleButtons.action_generate_reactions(context, *args)
+            new_reactions = await ButtonMaker.action_generate_reactions(context, *args)
             discord_message = await context.channel.fetch_message(message_id)
-            status_new = await MakeRoleButtons.action_make_message_document(context, discord_message, new_reactions)
+            status_new = await ButtonMaker.action_make_message_document(context, discord_message, cls.is_distinct, new_reactions)
             if discord_message.author == client.user:
-                await MakeRoleButtons.action_edit_message(new_reactions, discord_message, status_new)
+                await ButtonMaker.action_edit_message(new_reactions, discord_message, cls.is_distinct, status_new)
             for reaction in new_reactions:
                 await discord_message.add_reaction(reaction[0])
             await context.message.delete()
@@ -36,14 +38,17 @@ class MakeRoleButtons:
         return [reaction for reaction in zip(emojis, roles)]
 
     @staticmethod
-    async def action_edit_message(reactions, discord_message, status_new):
-        string = "\n\n-----------------------------------------\nPress emojis for role assignment:" if status_new else ""
+    async def action_edit_message(reactions, discord_message, is_distinct, status_new):
+        if not is_distinct:
+            string = "\n\n-----------------------------------------\nPress emojis for role assignment:" if status_new else ""
+        else:
+            string = "\n\n-----------------------------------------\nPress emojis for role assignment:\nOnly one role can be active at a time!" if status_new else ""
         for reaction in reactions:
             string += f"\n{reaction[0]}\t\t{reaction[1].mention}"
         await discord_message.edit(content=discord_message.content + string)
 
     @staticmethod
-    async def action_make_message_document(context, discord_message, new_reactions):
+    async def action_make_message_document(context, discord_message, is_distinct, new_reactions):
         message = data_access.find_one(Message, discord_message_id=discord_message.id,
                                        discord_guild_id=context.guild.id)
         if message:
@@ -53,7 +58,7 @@ class MakeRoleButtons:
             status_new = True
             message = Message(discord_message_id=discord_message.id, discord_guild_id=context.guild.id)
             reactions = []
-            message.is_distinct = False
+            message.is_distinct = is_distinct
         for reaction in new_reactions:
             emoji, role = reaction
             reactions.append(Reaction(emoji, role.id))
