@@ -2,8 +2,8 @@ import pathlib
 
 from django.shortcuts import render, redirect
 
-from django_mage.mage_admin.forms import SimpleDiscordCommandForm
-from django_mage.mage_admin.models import SimpleDiscordCommand
+from django_mage.mage_admin.forms import SimpleDiscordCommandForm, BotSettingsForm, ServerSettingsForm, SdcSettingsForm
+from django_mage.mage_admin.models import SimpleDiscordCommand, BotSettingsModel, SdcSettingsModel
 from utils.SimpleCogsGenerator import SimpleCogsGenerator
 
 from config import ROOT_DIR, DJANGO_COGS_PATHS
@@ -15,6 +15,7 @@ TEMPLATE_PATH = ROOT_DIR + "/django_mage/templates"
 
 def bot_index(request):
     return render(request, f'{TEMPLATE_PATH}/base.html')
+
 
 def sdc(request):
     sdc_list = SimpleDiscordCommand.objects.all()
@@ -32,6 +33,7 @@ def sdc(request):
         'sdc_list': sdc_list,
         'form': form
     })
+
 
 def del_sdc(request, name=None):
     if name:
@@ -52,4 +54,34 @@ def sdc_build(request):
     return render(request, f'{TEMPLATE_PATH}/build-output.html', {
         'page_title': 'Generated File - Simple Discord Commands',
         'output': str(file_contents)
+    })
+
+
+def settings_page(request):
+    if request.method == 'POST':
+        pass
+
+    bot_settings_form = BotSettingsForm
+    sdc_settings_form = SdcSettingsForm
+
+    return render(request, f'{TEMPLATE_PATH}/settings-page.html', {
+        'page_title': 'Settings',
+        'bot_settings_form': bot_settings_form,
+        'sdc_settings_form': sdc_settings_form
+    })
+
+
+def server_settings(request):
+    if request.method == 'POST':
+        _id = request.POST.get("discord_server_id")
+        form_data = BotSettingsModel.objects.filter(discord_server_id=_id).first()
+        form = ServerSettingsForm(request.POST, instance=form_data)
+        if form.is_valid():
+            form.save()
+
+    form = ServerSettingsForm
+
+    return render(request, f'{TEMPLATE_PATH}/bot-settings.html', {
+        'page_title': 'Discord Bot Settings',
+        'form': form
     })
