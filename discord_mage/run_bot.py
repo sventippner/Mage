@@ -40,8 +40,18 @@ def load_extensions(client, paths):
             print("success")
 
 
+def init_intents():
+    intents = discord.Intents.default()
+    intents.members = True
+    return intents
+
+
 def main():
-    client = discord.ext.commands.Bot(command_prefix=lambda _, context: find_one(Server, discord_guild_id=context.guild.id).bot_prefix)
+    intents = init_intents()
+    client = discord.ext.commands.Bot(
+        intents=intents,
+        command_prefix=lambda _, context: find_one(Server, discord_guild_id=context.guild.id).bot_prefix
+    )
     load_extensions(client, COGS_PATHS)
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")
 
