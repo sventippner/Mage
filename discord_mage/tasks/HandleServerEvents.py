@@ -1,12 +1,7 @@
 from datetime import datetime
-from itertools import cycle
-
-from discord.ext.commands import RoleConverter
-
-from config import DEFAULT_PREFIX
 
 import discord
-from discord.ext import tasks, commands
+from discord.ext import tasks
 
 from mage.models.Event import Event
 from mage.models.Server import Server
