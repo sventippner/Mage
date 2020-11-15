@@ -58,12 +58,26 @@ def sdc_build(request):
 
 
 def settings_page(request):
+    # init forms and fields
+    sdc_form_data = SdcSettingsModel.objects.all().first()
+    sdc_settings_form = SdcSettingsForm(instance=sdc_form_data)
+
+    bot_form_data = BotSettingsModel.objects.all().first()
+    bot_settings_form = BotSettingsForm(instance=bot_form_data)
+
+    # check for updates
     if request.method == 'POST':
-        pass
+        # sdc settings form
+        sdc_settings_form = SdcSettingsForm(request.POST, instance=sdc_form_data)
+        if sdc_settings_form.is_valid():
+            sdc_settings_form.save()
 
-    bot_settings_form = BotSettingsForm
-    sdc_settings_form = SdcSettingsForm
+        # bot settings form
+        bot_settings_form = BotSettingsForm(request.POST, instance=bot_form_data)
+        if bot_settings_form.is_valid():
+            bot_settings_form.save()
 
+    # build website
     return render(request, f'{TEMPLATE_PATH}/settings-page.html', {
         'page_title': 'Settings',
         'bot_settings_form': bot_settings_form,
@@ -72,12 +86,14 @@ def settings_page(request):
 
 
 def server_settings(request):
+    """
     if request.method == 'POST':
         _id = request.POST.get("discord_server_id")
         form_data = BotSettingsModel.objects.filter(discord_server_id=_id).first()
         form = ServerSettingsForm(request.POST, instance=form_data)
         if form.is_valid():
             form.save()
+    """
 
     form = ServerSettingsForm
 
