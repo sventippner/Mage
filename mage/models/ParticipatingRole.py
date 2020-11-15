@@ -4,11 +4,13 @@ from mongoengine import IntField, EmbeddedDocument, NotUniqueError, ListField
 class ParticipatingRole(EmbeddedDocument):
     role_id = IntField(required=True)
     discord_user_ids = ListField(IntField())
+    points = IntField(default=0)
 
-    def __init__(self, role_id, discord_user_ids, *args, **kwargs):
+    def __init__(self, role_id, discord_user_ids, points, *args, **kwargs):
         super(ParticipatingRole, self).__init__(*args, **kwargs)
         self.role_id = role_id
         self.discord_user_ids = discord_user_ids
+        self.points = points
 
 
     def save_this(self, *args, **kwargs):
@@ -20,7 +22,8 @@ class ParticipatingRole(EmbeddedDocument):
         try:
             return ParticipatingRole.objects(
                 role_id=self.role_id,
-                discord_user_ids=self.discord_user_ids
+                discord_user_ids=self.discord_user_ids,
+                points=self.points
             ).update_one(upsert=True, **kwargs)
         except NotUniqueError:
             raise NotUniqueError(f"Participating Role already exists.")
@@ -33,8 +36,9 @@ class ParticipatingRole(EmbeddedDocument):
         """
         return ParticipatingRole.objects(
             role_id=self.role_id,
-            discord_user_ids=self.discord_user_ids
+            discord_user_ids=self.discord_user_ids,
+            points=self.points
         ).delete()
 
     def __str__(self):
-        return f"({self.role_id}, {self.discord_user_ids})"
+        return f"(RoleID: {self.role_id}, Points: {self.points}, UserIDs: {self.discord_user_ids})"

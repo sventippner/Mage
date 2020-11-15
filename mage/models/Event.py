@@ -1,4 +1,5 @@
-from mongoengine import Document, StringField, DateTimeField, IntField, ListField, EmbeddedDocumentListField
+from mongoengine import Document, StringField, DateTimeField, IntField, ListField, EmbeddedDocumentListField, \
+    NotUniqueError
 from datetime import datetime, timedelta
 
 from mage.models.ParticipatingRole import ParticipatingRole
@@ -34,7 +35,43 @@ class Event(Document):
         self.start_date = start_date
         self.end_date = end_date
         self.participating_roles = participating_roles
-        self.rewards = [rewards]  # todo multiple items within list
+        self.rewards = rewards
+
+    @staticmethod
+    def find(**kwargs):
+        return Event.objects(**kwargs)
+
+    def delete_this(self):
+        """ Deletes self document
+
+        :return: Amount of deleted documents
+        """
+        return Event.objects(
+            discord_guild_id=self.discord_guild_id,
+            name=self.name,
+            start_date=self.start_date,
+            end_date=self.end_date,
+            participating_roles=self.participating_roles,
+            rewards=self.rewards
+        ).delete()
+
+    def save_this(self, *args, **kwargs):
+        """ Updates this user
+
+        :param kwargs: Query Operations
+        :return: List with user
+        """
+        try:
+            return Event.objects(
+                discord_guild_id=self.discord_guild_id,
+                name=self.name,
+                start_date=self.start_date,
+                end_date=self.end_date,
+                participating_roles=self.participating_roles,
+                rewards=self.rewards
+            ).update_one(upsert=True, **kwargs)
+        except NotUniqueError:
+            raise NotUniqueError(f"Event already exists.")
 
     def __str__(self):
         return f'Event "{self.name}":\nstarts: {self.start_date} - ends: {self.end_date}\nreward: {self.rewards}\nRoles and corresponding participants: {self.participating_roles}'

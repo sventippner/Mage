@@ -29,8 +29,8 @@ class Event(commands.Cog):
         end_date = start_date + timedelta(days=duration)
         role_converter = RoleConverter()
         roles = [await role_converter.convert(context, role) for role in participating_roles.split()]
-        role_participant_list = [ParticipatingRole(role.id, [member.id for member in role.members]) for role in roles]
-        print(role_participant_list)
+        role_participant_list = [ParticipatingRole(role.id, [member.id for member in role.members], 0) for role in roles]
+        rewards = [rewards]
         await StartEvent.call(context, name, start_date, end_date, rewards, role_participant_list)
 
 
