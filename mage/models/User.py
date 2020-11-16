@@ -1,5 +1,5 @@
 import discord
-from mongoengine import StringField, Document, LongField, IntField, ListField, NotUniqueError
+from mongoengine import StringField, Document, LongField, IntField, ListField, NotUniqueError, DictField
 
 from utils import data_access
 
@@ -17,7 +17,8 @@ class User(Document):
     discord_guild_id = IntField()
 
     points = LongField(default=0)
-    items = ListField(IntField(), default=[])
+    # items = ListField(IntField(), default=[])
+    items = DictField(default={})
     pvp_status = IntField(default=0)
 
     meta = {
@@ -86,13 +87,29 @@ class User(Document):
                 return level
         return level
 
-    def has_item(self, item_id):
+    def has_item(self, item_id: int, *, amount=1):
         """ Checks if user has the item
 
         :param item_id: item id
         :return: Boolean
         """
-        return item_id in self.items
+        if str(item_id) in self.items.keys():
+            if self.items[str(item_id)] >= amount:
+                return True
+        return False
+
+    def obtain_item(self, item_id: int, *, amount=1):
+        if str(item_id) in self.items.keys():
+            self.items[str(item_id)] += amount
+        else:
+            self.items[str(item_id)] = amount
+
+    def lose_item(self, item_id: int, *, amount=1):
+        if str(item_id) in self.items.keys():
+            if self.items[str(item_id)] >= amount + 1:
+                self.items[str(item_id)] -= amount
+            else:
+                self.items.pop(str(item_id))
 
     def __str__(self):
-        return f"User ID:{self.discord_user_id} ({self.points} Points)"
+        return f"User ID:{self.discord_user_id} ({self.points} Points) (Items: {self.items})"
