@@ -1,6 +1,8 @@
+import discord
 from discord.ext import commands
 
 from discord_mage.listeners.OnGuildRemove import OnGuildRemove
+from discord_mage.listeners.OnMemberJoin import OnMemberJoin
 from discord_mage.listeners.OnMessage import OnMessage
 from discord_mage.listeners.OnReady import OnReady
 from discord_mage.listeners.OnCommandError import OnCommandError
@@ -50,6 +52,14 @@ class Listener(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, reaction):
         await OnRawReactionAdd.call(self.client, reaction)
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member: discord.Member):
+        await OnMemberJoin.call(self.client, member)
+
+    # @commands.Cog.listener()
+    # async def on_member_remove(self, member: discord.Member):
+    #     await OnMemberRemove.call(self.client, member)
 
 
 def setup(client):
