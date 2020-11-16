@@ -20,15 +20,15 @@ class Profile:
         if user.level == User.max_level:
             msg += " (MAX)"
 
-        msg += f"\nPoints: **{user.points}**\n\n"
+        msg += f"\nPoints: **{user.points}**"
 
         if user.level < User.max_level:
             points_needed = User.level_generator[user.level + 1] - user.points
             msg += f"\nPoints needed for Level-Up: {points_needed}"
 
         if user.items:
-            msg += f"\n**{len(user.items)} Items:**"
-            for item in user.items:
-                msg += f'<Todo> \n{item}'
+            msg += f"\n\n**Items:**"
+            for item, amount in user.items.items():
+                msg += f'\n<Todo> {amount}x {item}'
 
         return msg

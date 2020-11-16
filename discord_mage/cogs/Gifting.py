@@ -18,8 +18,8 @@ class Gifting(commands.Cog):
         await Gift.call_points(context, points, member)
 
     @gift.group()
-    async def item(self, context):
-        print("TODO gift item to another user")  # TODO: gift items
+    async def item(self, context, amount: int, item: int, member: discord.Member):
+        await Gift.call_item(context, amount, item, member)
 
 
 def setup(client):

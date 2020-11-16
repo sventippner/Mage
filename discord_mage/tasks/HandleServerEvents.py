@@ -33,9 +33,10 @@ class HandleServerEvents:
     def action_reward_winners(self, event: Event, winners):
         for winner_id in winners:
             user = data_access.find_one(User, discord_user_id=winner_id, discord_guild_id=event.discord_guild_id)
-            for reward in event.rewards:
-                user.items.append(reward)
-            user.save_this(set__items=user.items)
+            if user:
+                for reward in event.rewards:
+                    user.obtain_item(reward)
+                user.save()
 
     async def action_create_announcement_string(self, event, max_points, gathered_points):
         announce_string = f"{event.name} has ended!\n\n"
