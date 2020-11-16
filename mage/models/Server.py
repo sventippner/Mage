@@ -1,4 +1,4 @@
-from mongoengine import StringField, DateField, Document, NotUniqueError, IntField
+from mongoengine import StringField, DateField, Document, NotUniqueError, IntField, BooleanField, ListField
 from datetime import datetime
 import discord
 
@@ -21,6 +21,10 @@ class Server(Document):
     server_name = StringField()
     date_joined = DateField(default=datetime.now())
     bot_prefix = StringField(min_length=1, max_length=3, default=DEFAULT_PREFIX)
+    personal_welcome_message_enabled = BooleanField(default=False)
+    guild_welcome_message_enabled = BooleanField(default=False)
+    personal_welcome_messages = ListField(StringField(), default=[])
+    guild_welcome_messages = ListField(StringField(), default=[])
     announcement_channel_id = IntField()
     moderation_channel_id = IntField()
     points_name = StringField()
