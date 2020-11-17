@@ -18,10 +18,12 @@ class Server(Document):
     :param moderation_channel_id: Discord Channel Id for moderation messages.
     """
     discord_guild_id = IntField(unique=True)
+    server_name = StringField()
     date_joined = DateField(default=datetime.now())
     bot_prefix = StringField(min_length=1, max_length=3, default=DEFAULT_PREFIX)
     announcement_channel_id = IntField()
     moderation_channel_id = IntField()
+    points_name = StringField()
 
     def __init__(self, guild: discord.Guild = None, *args, **kwargs):
         super(Server, self).__init__(*args, **kwargs)
@@ -36,3 +38,6 @@ class Server(Document):
         return Server.objects(
             discord_guild_id=self.discord_guild_id
         ).delete()
+
+    def __str__(self):
+        return f"id: {self.discord_guild_id}, bot_prefix: {self.bot_prefix}"

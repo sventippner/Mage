@@ -8,12 +8,15 @@ class SimpleDiscordCommandForm(forms.ModelForm):
         model = SimpleDiscordCommand
         exclude = ()
 
+class SdcSettingsForm(forms.ModelForm):
+    class Meta:
+        model = SdcSettingsModel
+        exclude = ()
 
 class BotSettingsForm(forms.ModelForm):
     class Meta:
         model = BotSettingsModel
         exclude = ()
-
 
 class ServerSettingsForm(forms.ModelForm):
     class Meta:
@@ -21,7 +24,4 @@ class ServerSettingsForm(forms.ModelForm):
         exclude = ()
 
 
-class SdcSettingsForm(forms.ModelForm):
-    class Meta:
-        model = SdcSettingsModel
-        exclude = ()
+
