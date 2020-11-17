@@ -21,9 +21,14 @@ class Server(Document):
     server_name = StringField()
     date_joined = DateField(default=datetime.now())
     bot_prefix = StringField(min_length=1, max_length=3, default=DEFAULT_PREFIX)
+    points_name = StringField()
+    personal_welcome_message_enabled = BooleanField(default=False)
+    guild_welcome_message_enabled = BooleanField(default=False)
+    personal_welcome_messages = ListField(StringField(), default=[])
+    guild_welcome_messages = ListField(StringField(), default=[])
     announcement_channel_id = IntField()
     moderation_channel_id = IntField()
-    points_name = StringField()
+    autorole_role_ids = ListField(IntField(), default=[])
 
     def __init__(self, guild: discord.Guild = None, *args, **kwargs):
         super(Server, self).__init__(*args, **kwargs)
@@ -38,6 +43,3 @@ class Server(Document):
         return Server.objects(
             discord_guild_id=self.discord_guild_id
         ).delete()
-
-    def __str__(self):
-        return f"id: {self.discord_guild_id}, bot_prefix: {self.bot_prefix}"

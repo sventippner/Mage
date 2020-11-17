@@ -1,5 +1,6 @@
 from discord_mage.listeners.OnGuildJoin import OnGuildJoin
 from discord_mage.tasks.ChangeStatus import ChangeStatus
+from discord_mage.tasks.HandleServerEvents import HandleServerEvents
 from mage.items.GivePoints import GivePoints
 from utils import data_access
 from mage.models.Server import Server
@@ -27,6 +28,7 @@ class OnReady:
     @staticmethod
     def action_start_tasks(client):
         ChangeStatus(client).call.start()
+        HandleServerEvents(client).call.start()
 
     @staticmethod
     def action_login(user):
