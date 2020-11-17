@@ -26,6 +26,7 @@ class Server(Document):
     guild_welcome_messages = ListField(StringField(), default=[])
     announcement_channel_id = IntField()
     moderation_channel_id = IntField()
+    autorole_role_ids = ListField(IntField(), default=[])
 
     def __init__(self, guild: discord.Guild = None, *args, **kwargs):
         super(Server, self).__init__(*args, **kwargs)

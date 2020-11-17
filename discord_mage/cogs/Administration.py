@@ -26,8 +26,12 @@ class Administration(commands.Cog):
     @set.command()
     @commands.has_permissions(administrator=True)
     async def custom_server_welcome_messages(self, context, value):
-        await Set.call_custom_server_welcome_messages(context, value)\
+        await Set.call_custom_server_welcome_messages(context, value)
 
+    @set.command()
+    @commands.has_permissions(administrator=True)
+    async def autorole(self, context, *, roles):
+        await Set.call_autorole(context, roles)
 
     @commands.group(aliases=Add.aliases, brief=Add.brief, description=Add.description)
     @commands.has_permissions(administrator=True)
