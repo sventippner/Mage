@@ -1,4 +1,4 @@
-from mongoengine import StringField, DateField, Document, NotUniqueError, IntField
+from mongoengine import StringField, DateField, Document, NotUniqueError, IntField, BooleanField, ListField
 from datetime import datetime
 import discord
 
