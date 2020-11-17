@@ -19,13 +19,11 @@
         </div>
     </form>
 
-
-    <h2>bot settings</h2>
-    <ul><li>bot owner list</li><li>item list</li></ul>
-
-    <h2>Generated Commands Settings</h2>
-    <ul><li>sdc path</li><li>sdc name</li></ul>
-
     <h2>Server Settings</h2>
-    <ul><li>(server id)</li><li>prefix</li><li>points name</li><li>Items<ul><li>activated</li><li>shop</li><li>cost</li></ul></li></ul>
+
+    <ul>
+       {% for server in server_list %}
+          <li><a href="/settings/s/{{ server.discord_guild_id }}"> {{ server.discord_guild_id }} </a></li>
+       {% endfor %}
+    </ul>
 {% endblock %}

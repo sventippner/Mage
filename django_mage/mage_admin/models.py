@@ -13,6 +13,12 @@ class SimpleDiscordCommand(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class SdcSettingsModel(models.Model):
+    class Meta:
+        verbose_name_plural = "SDC Settings"
+
+    sdc_path = models.CharField(max_length=30)
+    sdc_name = models.CharField(max_length=20)
 
 class BotSettingsModel(models.Model):
     class Meta:
@@ -25,15 +31,5 @@ class ServerSettingsModel(models.Model):
     class Meta:
         verbose_name_plural = "Server Settings"
 
-    discord_server_id = models.CharField(max_length=200)
-    prefix = models.CharField(max_length=30)
+    bot_prefix = models.CharField(max_length=5, default="!")
     points_name = models.CharField(max_length=30)
-    bot_owner = models.TextField()
-
-
-class SdcSettingsModel(models.Model):
-    class Meta:
-        verbose_name_plural = "SDC Settings"
-
-    sdc_path = models.CharField(max_length=30)
-    sdc_name = models.CharField(max_length=20)
