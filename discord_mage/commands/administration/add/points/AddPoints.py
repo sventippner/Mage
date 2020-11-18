@@ -5,7 +5,7 @@ from utils import data_access
 
 
 class AddPoints:
-    aliases = ['addpoints']
+    aliases = []
     brief = "adds points to mentioned users account"
     description = "adds specified amount of points to mentioned users account. Amount of points automatically reduces to match max_level for user if amount of points exceeds points needed for max_level."
 

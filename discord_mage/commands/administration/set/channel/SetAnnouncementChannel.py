@@ -4,7 +4,7 @@ from utils.data_access import find_one
 
 
 class SetAnnouncementChannel:
-    aliases = ['setannouncementchannel']
+    aliases = ['announcementchannel']
     brief = 'sets announcement channel'
     description = f"sets an announcement channel for some other commands like {DEFAULT_PREFIX}announce"
 
