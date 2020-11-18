@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <form id="data-form settings-form" action="" enctype="multipart/form-data" method="POST" class="form-row" style="">
+    <form id="data-form" action="" enctype="multipart/form-data" method="POST" class="settings-form form-row" style="">
         <div class="form-group">
             <h2>bot settings</h2>
             {% csrf_token %}
@@ -21,7 +21,7 @@
 
     <h2>Server Settings</h2>
 
-    <ul>
+    <ul id="server-list">
        {% for server in server_list %}
           <li><a href="/settings/s/{{ server.discord_guild_id }}"> {{ server.discord_guild_id }} </a></li>
        {% endfor %}

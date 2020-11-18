@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <form id="data-form settings-form" action="" enctype="multipart/form-data" method="POST" class="form-row" style="">
+    <form id="data-form" action="" enctype="multipart/form-data" method="POST" class="settings-form form-row" style="">
         <div class="form-group">
             {% csrf_token %}
             {% bootstrap_form form %}

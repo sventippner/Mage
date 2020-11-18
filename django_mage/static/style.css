@@ -5,12 +5,42 @@
 .form-group {
     display: inline-block;
 }
+.form-group textarea{
+    height: 110px;
+}
+
 .form-row {
     margin: 12px;
     padding: 0px;
 }
 .form-group button {
     display: block;
+}
+
+.settings-form .form-group {
+    display: block;
+    width: 100%;
+}
+
+.settings-form .form-control {
+    width: 40%;
+    min-width: 200px;
+}
+
+ul#server-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+#server-list li {
+    width: 200px;
+    margin: 2px;
+    padding: 2px;
+    background-color: #f8f9fa;
+    font-size: 1.1em;
+    text-align: center;
 }
 
 .code {
