@@ -3,7 +3,7 @@ from utils import data_access
 
 
 class SetPrefix:
-    aliases = ['setprefix', 'prefix', 'changeprefix']
+    aliases = []
     brief = 'changes bot prefix'
     description = 'changes command prefix on this server for all users'
 

@@ -3,7 +3,7 @@ from utils.data_access import find_one
 
 
 class SetModerationChannel:
-    aliases = ['setmoderationchannel']
+    aliases = ['moderationchannel']
     brief = 'sets moderation channel'
     description = f"sets a moderation channel"
 
