@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord_mage.commands.Hello import Hello
+from discord_mage.commands.test.Hello import Hello
 
 
 class Test(commands.Cog):

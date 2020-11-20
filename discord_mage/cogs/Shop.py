@@ -1,8 +1,8 @@
 
 from discord.ext import commands
 
-from discord_mage.commands.BuyItem import BuyItem
-from discord_mage.commands.Shop import Shop
+from discord_mage.commands.shop.BuyItem import BuyItem
+from discord_mage.commands.shop.Shop import Shop
 
 
 class Points(commands.Cog):

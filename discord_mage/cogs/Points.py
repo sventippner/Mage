@@ -1,8 +1,6 @@
-import discord
 from discord.ext import commands
 
-from discord_mage.commands.administration.add.points.AddPoints import AddPoints
-from discord_mage.commands.Profile import Profile
+from discord_mage.commands.points.Profile import Profile
 
 
 class Points(commands.Cog):

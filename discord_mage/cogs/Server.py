@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord_mage.commands.Ping import Ping
+from discord_mage.commands.server.Ping import Ping
 
 
 class Server(commands.Cog):

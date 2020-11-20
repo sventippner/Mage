@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 from discord_mage.commands.moderation.Announcements.Announce import Announce
-from discord_mage.commands.Purge import Purge
+from discord_mage.commands.moderation.Purge import Purge
 
 
 class Moderation(commands.Cog):
