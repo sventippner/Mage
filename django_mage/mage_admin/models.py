@@ -1,5 +1,7 @@
 from djongo import models
 
+from config import DJANGO_COGS_PATHS
+
 
 class SimpleDiscordCommand(models.Model):
     class Meta:
@@ -17,8 +19,8 @@ class SdcSettingsModel(models.Model):
     class Meta:
         verbose_name_plural = "SDC Settings"
 
-    sdc_path = models.CharField(max_length=30)
-    sdc_name = models.CharField(max_length=20)
+    # sdc_path = models.CharField(max_length=30, default=DJANGO_COGS_PATHS)
+    sdc_name = models.CharField(max_length=20, default="SDC")
 
 class BotSettingsModel(models.Model):
     class Meta:

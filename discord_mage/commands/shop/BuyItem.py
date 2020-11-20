@@ -25,6 +25,7 @@
 
 """
 from mage.models.Item import Item
+from mage.models.Server import Server
 from utils import data_access
 
 
@@ -40,18 +41,19 @@ class BuyItem:
         """ this function is executed by a discord message """
         user = data_access.find_user_by_discord_message(context.message)
         item = data_access.find_one(Item, name=item_name)
+        server = data_access.find_one(Server, discord_guild_id=context.guild.id)
 
-        result = BuyItem.action_buy_item(user, item)
+        result = BuyItem.action_buy_item(server, user, item)
 
         await context.send(result)
 
 
     @staticmethod
-    def action_buy_item(user, item):
+    def action_buy_item(server, user, item):
         if not item:
             return f"Item not found."
         if user.points <= item.price:
-            return f"Not sufficient points to buy {item.name}"  # Todo: Points name
+            return f"Not sufficient {server.points_name} to buy {item.name}"  # Todo: Points name
         else:
             user.items.append(item.name)
             user.points -= item.price

@@ -41,10 +41,11 @@ class HandleServerEvents:
     async def action_create_announcement_string(self, event, max_points, gathered_points):
         announce_string = f"{event.name} has ended!\n\n"
         guild = self.client.get_guild(id=event.discord_guild_id)
+        server = data_access.find_one(Server, event.discord_guild_id)
         winner_list = []
         for role_id, points in gathered_points.items():
             role = discord.utils.get(guild.roles, id=role_id)
-            announce_string += f"{role.mention} gathered **{points}** points.\n"
+            announce_string += f"{role.mention} gathered **{points}** {server.points_name}.\n"
             if points == max_points and max_points != 0:
                 winner_list.append(role)
         announce_string += "\nWinner:"

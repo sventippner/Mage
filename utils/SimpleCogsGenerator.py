@@ -14,7 +14,7 @@ class SimpleCogsGenerator:
 
     def __init__(self, name=None):
         if name:
-            self.__code = name
+            self.__name = name
         self.__code = PythonCodeGenerator()
         self.__write_imports()
         self.__write_class_header()
