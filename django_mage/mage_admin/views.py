@@ -8,10 +8,14 @@ from django_mage.view_helper import get_server_list, get_server_data
 from utils.SimpleCogsGenerator import SimpleCogsGenerator
 
 from config import ROOT_DIR, DJANGO_COGS_PATHS
+from utils.data_access import db_connect
+
 
 # Create your views here.
 
 TEMPLATE_PATH = ROOT_DIR + "/django_mage/templates"
+db_connect()
+
 
 
 def bot_index(request):
