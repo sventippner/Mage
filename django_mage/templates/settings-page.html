@@ -7,14 +7,14 @@
         <div class="form-group">
             <h2>bot settings</h2>
             {% csrf_token %}
-            {% bootstrap_form sdc_settings_form %}
+            {% bootstrap_form bot_settings_form %}
             <button type="submit" class="btn btn-primary">Speichern</button>
         </div>
 
         <div class="form-group">
             <h2>Generated Commands Settings</h2>
             {% csrf_token %}
-            {% bootstrap_form bot_settings_form %}
+            {% bootstrap_form sdc_settings_form %}
             <button type="submit" class="btn btn-primary">Speichern</button>
         </div>
     </form>
