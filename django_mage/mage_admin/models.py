@@ -34,4 +34,4 @@ class ServerSettingsModel(models.Model):
         verbose_name_plural = "Server Settings"
 
     bot_prefix = models.CharField(max_length=5, default="!")
-    points_name = models.CharField(max_length=30)
+    points_name = models.CharField(max_length=30, default="Points")
