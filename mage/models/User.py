@@ -1,7 +1,7 @@
 import discord
 from mongoengine import StringField, Document, LongField, IntField, ListField, NotUniqueError, DictField
 
-from utils import data_access
+# from utils import data_access
 
 
 class User(Document):
