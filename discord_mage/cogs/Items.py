@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord_mage.commands.items.TestItem import TestItem
-
+from discord_mage.commands.items.Dice import Dice
 
 class Items(commands.Cog):
 
@@ -12,6 +12,11 @@ class Items(commands.Cog):
     async def testitem(self, context, target: discord.Member, amount: int = 0):
 
         await TestItem().call(context, target, amount)
+
+    @commands.command(aliases=Dice.aliases, brief=Dice.brief, description=Dice.description)
+    async def dice(self, context):
+
+        await Dice().call(context)
 
 
 def setup(client):
