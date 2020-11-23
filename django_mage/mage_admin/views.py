@@ -42,7 +42,9 @@ def sdc(request):
 
 def del_sdc(request, name=None):
     if name:
-        SimpleDiscordCommand.objects.filter(name=name).first().delete()
+        dc = SimpleDiscordCommand.objects.filter(name=name).first()
+        if dc:
+            dc.delete()
 
     return redirect('/sdc/')
 
