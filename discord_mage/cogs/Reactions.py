@@ -3,6 +3,7 @@ from discord.ext import commands
 
 from discord_mage.commands.reactions.buttons.distinctbuttons.MakeDistinctRoleButtons import MakeDistinctRoleButtons
 from discord_mage.commands.reactions.buttons.makebuttons.MakeRoleButtons import MakeRoleButtons
+from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 
 
 class Reactions(commands.Cog):
@@ -12,6 +13,7 @@ class Reactions(commands.Cog):
 
     @commands.command(aliases=MakeRoleButtons.aliases, brief=MakeRoleButtons.brief,
                       description=MakeRoleButtons.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(manage_roles=True, manage_messages=True)
     async def make_role_buttons(self, context, message_id, *args):
         """
@@ -25,6 +27,7 @@ class Reactions(commands.Cog):
 
     @commands.command(aliases=MakeDistinctRoleButtons.aliases, brief=MakeDistinctRoleButtons.brief,
                       description=MakeDistinctRoleButtons.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(manage_roles=True, manage_messages=True)
     async def make_distinct_role_buttons(self, context, message_id, *args):
         """

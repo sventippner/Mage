@@ -30,6 +30,7 @@ class Server(Document):
     moderation_channel_id = IntField()
     autorole_role_ids = ListField(IntField(), default=[])
 
+
     def __init__(self, guild: discord.Guild = None, *args, **kwargs):
         super(Server, self).__init__(*args, **kwargs)
         if guild:

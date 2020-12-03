@@ -2,6 +2,7 @@ from discord.ext import commands
 
 from discord_mage.commands.moderation.Announcements.Announce import Announce
 from discord_mage.commands.moderation.Purge import Purge
+from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 
 
 class Moderation(commands.Cog):
@@ -10,11 +11,13 @@ class Moderation(commands.Cog):
         self.client = client
 
     @commands.command(brief=Purge.brief, description=Purge.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(manage_messages=True)
     async def purge(self, context, amount=2):
         await Purge.call(context, amount)
 
     @commands.command(aliases=Announce.aliases, brief=Announce.brief, description=Announce.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(mention_everyone=True)
     async def announce(self, context, *, message):
         """

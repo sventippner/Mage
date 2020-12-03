@@ -8,6 +8,7 @@ from discord_mage.listeners.OnReady import OnReady
 from discord_mage.listeners.OnCommandError import OnCommandError
 from discord_mage.listeners.OnGuildJoin import OnGuildJoin
 from discord_mage.listeners.OnRawReactionAdd import OnRawReactionAdd
+from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 
 
 class Listener(commands.Cog):
@@ -47,7 +48,8 @@ class Listener(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        await OnMessage.call(message)
+        if message.guild:  # ignore DMs
+            await OnMessage.call(message)
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, reaction):

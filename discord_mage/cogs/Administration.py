@@ -12,6 +12,7 @@ from discord_mage.commands.administration.add.Add import Add
 from discord_mage.commands.administration.set.Set import Set
 from discord_mage.commands.administration.set.welcome_message.SetPrivateWelcomeMessage import SetPrivateWelcomeMessage
 from discord_mage.commands.administration.set.welcome_message.SetServerWelcomeMessage import SetServerWelcomeMessage
+from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 
 
 class Administration(commands.Cog):
@@ -20,46 +21,55 @@ class Administration(commands.Cog):
         self.client = client
 
     @commands.group(aliases=Add.aliases, brief=Add.brief, description=Add.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def add(self, context):
         await Add.call(context)
 
     @add.command(aliases=AddPrivateWelcomeMessage.aliases, brief=AddPrivateWelcomeMessage.brief, description=AddPrivateWelcomeMessage.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def custom_private_welcome_message(self, context, message_id: int):
         await AddPrivateWelcomeMessage.call_custom_private_welcome_message(context, message_id)
 
     @add.command(aliases=AddServerWelcomeMessage.aliases, brief=AddServerWelcomeMessage.brief, description=AddServerWelcomeMessage.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def custom_server_welcome_message(self, context, message_id: int):
         await AddServerWelcomeMessage.call_custom_server_welcome_message(context, message_id)
 
     @add.command(aliases=AddPoints.aliases, brief=AddPoints.brief, description=AddPoints.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def points(self, context, member: discord.Member, amount: int):
         await AddPoints.call(context, member, amount)
 
     @commands.group(aliases=Set.aliases, brief=Set.brief, description=Set.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def set(self, context):
         await Set.call(context)
 
     @set.command(aliases=SetPrivateWelcomeMessage.aliases, brief=SetPrivateWelcomeMessage.brief, description=SetPrivateWelcomeMessage.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def custom_private_welcome_messages(self, context, value):
         await SetPrivateWelcomeMessage.call_custom_private_welcome_messages(context, value)
 
     @set.command(aliases=SetServerWelcomeMessage.aliases, brief=SetServerWelcomeMessage.brief, description=SetServerWelcomeMessage.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def custom_server_welcome_messages(self, context, value):
         await SetServerWelcomeMessage.call_custom_server_welcome_messages(context, value)
 
     @set.command(aliases=SetAutorole.aliases, brief=SetAutorole.brief, description=SetAutorole.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def autorole(self, context, *, roles):
         await SetAutorole.call_autorole(context, roles)
 
     @set.command(aliases=SetPrefix.aliases, brief=SetPrefix.brief, description=SetPrefix.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def prefix(self, context, prefix):
         """
@@ -71,6 +81,7 @@ class Administration(commands.Cog):
 
     @set.command(aliases=SetAnnouncementChannel.aliases, brief=SetAnnouncementChannel.brief,
                       description=SetAnnouncementChannel.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def announcement_channel(self, context, channel: discord.TextChannel = None):
         """
@@ -84,6 +95,7 @@ class Administration(commands.Cog):
 
     @set.command(aliases=SetModerationChannel.aliases, brief=SetModerationChannel.brief,
                       description=SetModerationChannel.description)
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def moderation_channel(self, context, channel: discord.TextChannel = None):
         """

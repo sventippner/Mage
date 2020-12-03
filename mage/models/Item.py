@@ -21,6 +21,7 @@ class Item(Document):
     category = ListField(StringField())
     brief = StringField()
     description = StringField()
+    is_enabled = BooleanField()
     is_event_item = BooleanField()
     is_shop_item = BooleanField()
     level_restriction = IntField()

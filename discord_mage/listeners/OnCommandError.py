@@ -11,6 +11,8 @@ class OnCommandError:
             await context.send(await OnCommandError.action_missing_required_argument())
         elif isinstance(error, commands.MissingPermissions):
             await context.send(await OnCommandError.action_missing_permissions())
+        elif isinstance(error, commands.CheckFailure):
+            await context.send(await OnCommandError.action_is_guild_command())
         else:
             # raise all other errors
             OnCommandError.action_raise_error(error)
@@ -26,6 +28,10 @@ class OnCommandError:
     @staticmethod
     async def action_missing_permissions():
         return "You are missing permissions to use this command."
+
+    @staticmethod
+    async def action_is_guild_command():
+        return "Command is supposed to be used in a server"
 
     @staticmethod
     def action_raise_error(error):

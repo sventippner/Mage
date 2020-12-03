@@ -4,9 +4,10 @@ from pathlib import Path
 import discord
 from discord.ext import commands
 
+from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 from mage.models.Server import Server
 from utils.Secrets import Secrets
-from config import COGS_PATHS, ROOT_DIR
+from config import COGS_PATHS, ROOT_DIR, DEFAULT_PREFIX
 from utils.data_access import db_connect, find_one
 
 
@@ -50,7 +51,7 @@ def main():
     intents = init_intents()
     client = discord.ext.commands.Bot(
         intents=intents,
-        command_prefix=lambda _, context: find_one(Server, discord_guild_id=context.guild.id).bot_prefix
+        command_prefix=lambda _, context: find_one(Server, discord_guild_id=context.guild.id).bot_prefix if IsGuildMessage.is_guild_message(context) else DEFAULT_PREFIX
     )
     load_extensions(client, COGS_PATHS)
     DISCORD_TOKEN = Secrets().get("DISCORD_TOKEN")

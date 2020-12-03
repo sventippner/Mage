@@ -20,6 +20,7 @@ class User(Document):
     # items = ListField(IntField(), default=[])
     items = DictField(default={})
     pvp_status = IntField(default=0)
+    health = IntField(default=100)
 
     meta = {
         'indexes': [

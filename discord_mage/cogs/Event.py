@@ -6,6 +6,7 @@ from discord.ext.commands import RoleConverter
 
 from discord_mage.commands.events.StartEvent import StartEvent
 from mage.models.ParticipatingRole import ParticipatingRole
+from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 
 
 class Event(commands.Cog):
@@ -14,15 +15,18 @@ class Event(commands.Cog):
         self.client = client
 
     @commands.group()
+    @commands.check(IsGuildMessage.is_guild_message)
     async def event(self, context):
         print("event")
 
     @event.group()
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def start(self, context):
         print("start")
 
     @start.command()
+    @commands.check(IsGuildMessage.is_guild_message)
     @commands.has_permissions(administrator=True)
     async def now(self, context, name, duration: int, rewards: int, *, participating_roles):
         start_date = datetime.now()
