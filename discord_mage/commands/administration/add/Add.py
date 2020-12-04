@@ -12,4 +12,4 @@ class Add:
 
     @staticmethod
     async def call(context):
-        print("add")
+        return

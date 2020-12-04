@@ -11,7 +11,7 @@ class Gift:
 
     @staticmethod
     async def call_gift():
-        print("gifting call")  # TODO gifting call without subcommands
+        return
 
     @staticmethod
     async def call_points(context, points: int, member: discord.Member):

@@ -12,7 +12,7 @@ class Set:
 
     @staticmethod
     async def call(context):
-        print("set")
+        return
 
     @staticmethod
     def action_invalid_argument(argument):
