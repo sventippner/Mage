@@ -1,6 +1,6 @@
 import discord
 
-from mage.models import Server
+from mage.models.Server import Server
 from utils import data_access
 from random import randint
 
@@ -18,9 +18,10 @@ class Dice:
         """ this function is executed by a discord message """
         user = data_access.find_user_by_discord_message(context.message)
         user.name = context.author.display_name
+        guild = data_access.find_one(Server, discord_guild_id=context.guild.id)
 
         if user.points - Dice.use_cost < 0:
-            await context.send(f"You do not have enough {Server.points_name}! You need at least {Dice.use_cost}")
+            await context.send(f"You do not have enough {guild.points_name}! You need at least {Dice.use_cost}")
         else:
             role_result = randint(1, 6)
             if role_result == 6:

@@ -18,6 +18,8 @@ class OnCommandError:
             await context.send(OnCommandError.action_is_bad_argument())
         elif isinstance(error, commands.CommandInvokeError):
             await context.send(OnCommandError.action_command_invoke_error())
+        elif isinstance(error, commands.ExpectedClosingQuoteError) or isinstance(error, commands.UnexpectedQuoteError):
+            await context.send(OnCommandError.action_quote_error())
         else:
             # raise all other errors
             OnCommandError.action_raise_error(error)
@@ -47,7 +49,12 @@ class OnCommandError:
         return f"An error occured while executing the command.\nThis is probably caused due to an incorrect use of the command.\nCheck `{DEFAULT_PREFIX}help` for information."
 
     @staticmethod
+    def action_quote_error():
+        return "Found unexpected quotes while parsing the command arguments."
+
+    @staticmethod
     def action_raise_error(error):
         raise error
+
 
 

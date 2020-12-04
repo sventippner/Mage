@@ -24,7 +24,7 @@ class SetPrefix:
 
     @staticmethod
     def action_is_valid(prefix: str):
-        return prefix.isascii() and prefix.isprintable() and 1 <= len(prefix) <= 5
+        return prefix.isascii() and prefix.isprintable() and '"' not in prefix and "'" not in prefix and 1 <= len(prefix) <= 5
 
     @staticmethod
     def action_not_valid(invalid_prefix):
