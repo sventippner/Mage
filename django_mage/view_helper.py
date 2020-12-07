@@ -8,5 +8,4 @@ def get_server_list():
 
 def get_server_data(id:str):
     server_data = data_access.find_one(Server, discord_guild_id=id)
-    print(f"server_data {server_data}")
     return server_data
