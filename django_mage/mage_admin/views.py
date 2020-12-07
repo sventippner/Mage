@@ -51,6 +51,8 @@ def del_sdc(request, name=None):
 
 def sdc_build(request):
     sdc_settings = SdcSettingsModel.objects.first()
+    if sdc_settings is None:
+        sdc_settings = SdcSettingsModel()
 
     scg = SimpleCogsGenerator(sdc_settings.sdc_name)
     sdc_list = SimpleDiscordCommand.objects.all()
