@@ -24,7 +24,7 @@ class Item(Document):
     is_enabled = BooleanField()
     is_event_item = BooleanField()
     is_shop_item = BooleanField()
-    level_restriction = IntField()
+    level_restriction = IntField(default=0)
 
     meta = {"allow_inheritance": True}
 

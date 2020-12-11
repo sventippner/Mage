@@ -3,6 +3,8 @@ from mage.models.User import User
 
 
 class GivePoints(Item):
+    __metaclass__ = Item
+
     name = "givepoints"
     aliases = ['item']
     brief = 'test item'

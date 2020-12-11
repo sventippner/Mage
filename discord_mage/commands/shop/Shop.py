@@ -12,8 +12,10 @@
         await context.send(msg)
 
 """
+from pprint import pprint
+
 from mage.models.Item import Item
-from utils import data_access
+from utils import data_access, MagicTools
 
 
 class Shop:
@@ -28,14 +30,21 @@ class Shop:
 
     @staticmethod
     def action_list_shop_items():
-        items = data_access.find(Item, is_shop_item=True)
-        print(f"!shop shop_items = {items}")
+        # items = data_access.find(Item, is_shop_item=True)
+        items = MagicTools.get_files_in_dir("/mage/items")
+
+        # print(f"!shop shop_items = {items}")
 
         if not items:
             return "Our shop is sold out."
 
         msg = "Use the command `buyitem <id>` to buy an item from the shop."
         for i in items:
-            msg += f'\n\n**{i.name}\tprice: {i.price}**\nRequired level to use: {i.level_restriction}\n*{i.description}*'
+            item_obj = MagicTools.create_instance_of_item(i)
+
+            try:
+                msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n*{item_obj.description}*'
+            except Exception:
+                pass
 
         return msg
