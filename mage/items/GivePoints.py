@@ -3,13 +3,13 @@ from mage.models.User import User
 
 
 class GivePoints(Item):
-    __metaclass__ = Item
-
     name = "givepoints"
+    cls_name = "GivePoints"
     aliases = ['item']
     brief = 'test item'
-    description = ''
+    description = 'asdasd'
     price = 20
+    level_restriction = 0
 
     use_cost = 25
 

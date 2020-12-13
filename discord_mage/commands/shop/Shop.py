@@ -33,8 +33,6 @@ class Shop:
         # items = data_access.find(Item, is_shop_item=True)
         items = MagicTools.get_files_in_dir("/mage/items")
 
-        # print(f"!shop shop_items = {items}")
-
         if not items:
             return "Our shop is sold out."
 
@@ -43,7 +41,7 @@ class Shop:
             item_obj = MagicTools.create_instance_of_item(i)
 
             try:
-                msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n*{item_obj.description}*'
+                msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n{item_obj.description}'
             except Exception:
                 pass
 

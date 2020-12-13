@@ -39,7 +39,7 @@ def load_extensions(client, paths):
             print(f"load {ext}...", end=" ")
             client.load_extension(ext)
             print("success")
-
+    print("")
 
 def init_intents():
     intents = discord.Intents.default()

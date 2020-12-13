@@ -27,6 +27,7 @@
 from mage.models.Item import Item
 from mage.models.Server import Server
 from utils import data_access
+from utils.MagicTools import get_item_list
 
 
 class BuyItem:
@@ -39,11 +40,12 @@ class BuyItem:
     @staticmethod
     async def call(context, item_name):
         """ this function is executed by a discord message """
-        user = data_access.find_user_by_discord_message(context.message)
-        item = data_access.find_one(Item, name=item_name)
-        server = data_access.find_one(Server, discord_guild_id=context.guild.id)
+        # item = data_access.find_one(Item, name=item_name)
 
-        result = BuyItem.action_buy_item(server, user, item)
+        if item_name in get_item_list():
+            user = data_access.find_user_by_discord_message(context.message)
+            server = data_access.find_one(Server, discord_guild_id=context.guild.id)
+            result = BuyItem.action_buy_item(server, user, item)
 
         await context.send(result)
 
@@ -53,7 +55,7 @@ class BuyItem:
         if not item:
             return f"Item not found."
         if user.points <= item.price:
-            return f"Not sufficient {server.points_name} to buy {item.name}"  # Todo: Points name
+            return f"Not sufficient {server.points_name} to buy {item.name}"
         else:
             user.items.append(item.name)
             user.points -= item.price

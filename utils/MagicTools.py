@@ -21,13 +21,6 @@ def get_files_in_dir(dir_path):
     return files
 
 
-def create_instance_of_item(name: str):
-    try:
-        return create_instance(f"mage.items.{name}", name)
-    except Exception:
-        return None
-
-
 def create_instance(module: str, classname: str):
     """ Returns an instance of the class """
 
@@ -37,3 +30,14 @@ def create_instance(module: str, classname: str):
         raise ValueError(f"Error: Could not load class. {classname} in {module}")
 
     return cls
+
+
+def get_item_list():
+    return get_files_in_dir("/mage/items")
+
+
+def create_instance_of_item(name: str):
+    try:
+        return create_instance(f"mage.items.{name}", name)
+    except Exception:
+        return None

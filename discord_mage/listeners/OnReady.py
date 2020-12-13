@@ -2,7 +2,8 @@ from discord_mage.listeners.OnGuildJoin import OnGuildJoin
 from discord_mage.tasks.ChangeStatus import ChangeStatus
 from discord_mage.tasks.HandleServerEvents import HandleServerEvents
 from mage.items.GivePoints import GivePoints
-from utils import data_access
+from mage.models.Item import Item
+from utils import data_access, MagicTools
 from mage.models.Server import Server
 
 
@@ -13,7 +14,7 @@ class OnReady:
         OnReady.action_check_for_new_guilds(client)
         OnReady.action_start_tasks(client)
 
-        # OnReady.action_initialize_item_database()
+        OnReady.action_initialize_item_database()
 
         print(OnReady.action_login(client.user))
 
@@ -35,12 +36,32 @@ class OnReady:
         return f'Bot logged in as {user}'
 
 
-    # Todo: not working
-    # Todo: Write items in database on bot start
+
     @staticmethod
     def action_initialize_item_database():
-        itemlist = [GivePoints()]
+        print("Initializing item database")
+        item_list = MagicTools.get_files_in_dir("/mage/items")
 
-        for i in itemlist:
-            print(i)
-            i.save()
+        for item_file in item_list:
+            item = MagicTools.create_instance_of_item(item_file)
+            if item:
+                print(f"add item {item.name}...", end=" ")
+                i = Item(
+                    name=item.name,
+                    price=item.price,
+                    description=item.description,
+                    brief=item.brief,
+                    function_name=item_file,
+                    # level_restriction=item.level_restriction
+                )
+
+                i.save_this(
+                    name=item.name,
+                    price=item.price,
+                    description=item.description,
+                    brief=item.brief,
+                    # level_restriction=item.level_restriction,
+                    function_name=i.function_name)
+
+                print("success")
+        print("")
