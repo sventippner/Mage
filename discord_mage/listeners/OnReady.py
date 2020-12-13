@@ -46,22 +46,25 @@ class OnReady:
             item = MagicTools.create_instance_of_item(item_file)
             if item:
                 print(f"add item {item.name}...", end=" ")
-                i = Item(
-                    name=item.name,
-                    price=item.price,
-                    description=item.description,
-                    brief=item.brief,
-                    function_name=item_file,
-                    # level_restriction=item.level_restriction
-                )
+                try:
+                    i = Item(
+                        name=item.name,
+                        price=item.price,
+                        description=item.description,
+                        brief=item.brief,
+                        function_name=item_file,
+                        # level_restriction=item.level_restriction
+                    )
 
-                i.save_this(
-                    name=item.name,
-                    price=item.price,
-                    description=item.description,
-                    brief=item.brief,
-                    # level_restriction=item.level_restriction,
-                    function_name=i.function_name)
+                    i.save_this(
+                        name=item.name,
+                        price=item.price,
+                        description=item.description,
+                        brief=item.brief,
+                        # level_restriction=item.level_restriction,
+                        function_name=i.function_name)
 
-                print("success")
+                    print("success")
+                except Exception:
+                    print("failed")
         print("")
