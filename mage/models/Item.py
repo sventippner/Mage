@@ -1,4 +1,6 @@
 from mongoengine import Document, IntField, StringField, ListField, BooleanField
+import utils.data_access as data
+from mage.models.User import User
 
 
 class Item(Document):
@@ -15,7 +17,7 @@ class Item(Document):
     :param is_shop_item: boolean, is listed in shop
     """
 
-    id = IntField()
+    id = IntField(unique=True)
     name = StringField(unique=True)
 
     price = IntField()
@@ -34,26 +36,43 @@ class Item(Document):
     @staticmethod
     def append_categories(categories, is_consumable, is_event_item, level_restriction):
         if is_consumable:
-            print("cls.is_consumable")
             categories.append("Consumables")
         if is_event_item:
-            print("cls.is_event_item")
             categories.append("Event Items")
         if level_restriction > 1:
-            print("cls.level_restriction")
             categories.append("Level Restricted")
 
     @staticmethod
     def on_buy(*args, **kwargs):
         pass
 
-    @staticmethod
-    def on_use(*args, **kwargs):
+    @classmethod
+    def on_use(cls, *args, **kwargs):
         pass
 
-    @staticmethod
-    def action_insufficient_points_to_use():
-        return "You have insufficient Points to use this Item"
+    @classmethod
+    def pre_use(cls, user):
+        ok = cls.check_permissions(user)
+        if ok:
+            return True
+        else:
+            return False
+
+    @classmethod
+    def check_permissions(cls, user: User):
+        if \
+        (
+            cls.is_enabled and
+            user.points >= cls.use_cost and
+            user.level >= cls.level_restriction and
+            user.has_item(cls.id)
+        ):
+            return True
+        return False
+
+    @classmethod
+    def pay_use_cost(cls, user: User):
+        user.points -= cls.use_cost
 
     def __str__(self):
         return f"{self.name} {self.brief} Price: {self.price}"
