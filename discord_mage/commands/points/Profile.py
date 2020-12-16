@@ -31,8 +31,7 @@ class Profile:
 
         if user.items:
             msg += f"\n\n**Items:**"
-            for item_id, amount in user.items.items():
-                item = data_access.find_one(Item, id=item_id)
-                msg += f'\n{amount}x {item.name}'
+            for item in user.items:
+                msg += f"\n\t{item}"
 
         return msg

@@ -42,22 +42,27 @@ class BuyItem:
         """ this function is executed by a discord message """
         # item = data_access.find_one(Item, name=item_name)
 
-        if item_name in get_item_list():
-            user = data_access.find_user_by_discord_message(context.message)
-            server = data_access.find_one(Server, discord_guild_id=context.guild.id)
-            result = BuyItem.action_buy_item(server, user, item)
+        user = data_access.find_user_by_discord_message(context.message)
+        server = data_access.find_one(Server, discord_guild_id=context.guild.id)
+
+        result = BuyItem.action_buy_item(server, user, item_name)
 
         await context.send(result)
 
 
     @staticmethod
-    def action_buy_item(server, user, item):
+    def action_buy_item(server, user, item_name):
+        item = data_access.find_one(Item, name=item_name)
         if not item:
             return f"Item not found."
-        if user.points <= item.price:
-            return f"Not sufficient {server.points_name} to buy {item.name}"
-        else:
-            user.items.append(item.name)
-            user.points -= item.price
-            user.save_this()
-            return f"{item.name} bought."
+
+        try:
+            if user.points <= item.price:
+                return f"Not sufficient {server.points_name} to buy {item.name}"
+            else:
+                user.items.append(item.name)
+                user.points -= item.price
+                user.save()
+                return f"{item.name} bought."
+        except:
+            return f"Could not buy item."

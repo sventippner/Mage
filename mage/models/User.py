@@ -18,7 +18,8 @@ class User(Document):
 
     points = LongField(default=0)
     # items = ListField(IntField(), default=[])
-    items = DictField(default={})
+    # items = DictField(default={})
+    items = ListField(StringField())
     pvp_status = IntField(default=0)
     health = IntField(default=100)
 
