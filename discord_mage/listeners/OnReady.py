@@ -14,7 +14,7 @@ class OnReady:
         OnReady.action_check_for_new_guilds(client)
         OnReady.action_start_tasks(client)
 
-        OnReady.action_initialize_item_database()
+        OnReady.action_initialize_item_database(True)
 
         print(OnReady.action_login(client.user))
 
@@ -38,33 +38,33 @@ class OnReady:
 
 
     @staticmethod
-    def action_initialize_item_database():
+    def action_initialize_item_database(force_init=False):
         print("Initializing item database")
         item_list = MagicTools.get_files_in_dir("/mage/items")
 
         for item_file in item_list:
             item = MagicTools.create_instance_of_item(item_file)
             if item:
-                print(f"add item {item.name}...", end=" ")
                 try:
-                    i = Item(
-                        name=item.name,
-                        price=item.price,
-                        description=item.description,
-                        brief=item.brief,
-                        function_name=item_file,
-                        # level_restriction=item.level_restriction
-                    )
+                    if force_init or not data_access.find_one(Item, name=item.name):
+                        print(f"add item {item.name}...", end=" ")
+                        i = Item(
+                            name=item.name,
+                            price=item.price,
+                            description=item.description,
+                            brief=item.brief,
+                            cls_name=item.cls_name,
+                            # level_restriction=item.level_restriction
+                        )
+                        i.save_this(
+                            name=item.name,
+                            price=item.price,
+                            description=item.description,
+                            brief=item.brief,
+                            cls_name=item.cls_name
+                        )
 
-                    i.save_this(
-                        name=item.name,
-                        price=item.price,
-                        description=item.description,
-                        brief=item.brief,
-                        # level_restriction=item.level_restriction,
-                        function_name=i.function_name)
-
-                    print("success")
+                        print("success")
                 except Exception:
                     print("failed")
         print("")

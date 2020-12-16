@@ -16,9 +16,9 @@ class Item(Document):
 
     # id = IntField()
     name = StringField(unique=True)
-    function_name = StringField()
+    cls_name = StringField(required=True)
 
-    price = IntField()
+    price = IntField(default=0, required=True)
     # category = ListField(StringField())
     brief = StringField()
     description = StringField()
@@ -32,7 +32,7 @@ class Item(Document):
     def __init__(self, *args, **kwargs):
         super(Item, self).__init__(*args, **kwargs)
 
-    def save_this(self, *args, **kwargs):
+    def save_this(self, **kwargs):
         """ Updates this user
 
         :param kwargs: Query Operations

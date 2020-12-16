@@ -31,16 +31,15 @@ class Shop:
     @staticmethod
     def action_list_shop_items():
         # items = data_access.find(Item, is_shop_item=True)
-        items = MagicTools.get_files_in_dir("/mage/items")
+        items = data_access.find(Item)
 
         if not items:
             return "Our shop is sold out."
 
         msg = "Use the command `buyitem <id>` to buy an item from the shop."
         for i in items:
-            item_obj = MagicTools.create_instance_of_item(i)
-
             try:
+                item_obj = MagicTools.create_instance_of_item(i.cls_name)
                 msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n{item_obj.description}'
             except Exception:
                 pass
