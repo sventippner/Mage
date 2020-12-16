@@ -13,7 +13,7 @@ class OnCommandError:
         elif isinstance(error, commands.MissingPermissions):
             await context.send(OnCommandError.action_missing_permissions())
         elif isinstance(error, commands.CheckFailure):
-            await context.send(OnCommandError.action_is_guild_command())
+            await context.send(OnCommandError.action_check_failure())
         elif isinstance(error, commands.BadArgument):
             await context.send(OnCommandError.action_is_bad_argument())
         elif isinstance(error, commands.CommandInvokeError):
@@ -37,10 +37,6 @@ class OnCommandError:
         return "You are missing permissions to use this command."
 
     @staticmethod
-    def action_is_guild_command():
-        return "Command is supposed to be used in a server"
-
-    @staticmethod
     def action_is_bad_argument():
         return f"You have used wrong argument(s). Check `{DEFAULT_PREFIX}help` for information."
 
@@ -51,6 +47,10 @@ class OnCommandError:
     @staticmethod
     def action_quote_error():
         return "Found unexpected quotes while parsing the command arguments."
+
+    @staticmethod
+    def action_check_failure():
+        return "Command can not be executed. Checks failed"
 
     @staticmethod
     def action_raise_error(error):

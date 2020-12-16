@@ -1,4 +1,4 @@
-import utils.Secrets
+from utils.Secrets import Secrets
 
 
 class IsBotOwner:
@@ -10,5 +10,5 @@ class IsBotOwner:
         :param ctx: context object
         :return: bool
         """
-        owners = utils.Secrets().get("BOT_OWNERS").split(", ")
-        return ctx.author.id in owners
+        owners = Secrets().get("BOT_OWNERS").split(", ")
+        return str(ctx.author.id) in owners

@@ -1,3 +1,4 @@
+from mage.models.Item import Item
 from mage.models.Server import Server
 from mage.models.User import User
 from utils import data_access
@@ -30,7 +31,8 @@ class Profile:
 
         if user.items:
             msg += f"\n\n**Items:**"
-            for item, amount in user.items.items():
-                msg += f'\n<Todo> {amount}x {item}'
+            for item_id, amount in user.items.items():
+                item = data_access.find_one(Item, id=item_id)
+                msg += f'\n{amount}x {item.name}'
 
         return msg
