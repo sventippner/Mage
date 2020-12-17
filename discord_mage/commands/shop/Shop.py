@@ -39,7 +39,7 @@ class Shop:
         msg = "Use the command `buyitem <id>` to buy an item from the shop."
         for i in items:
             try:
-                item_obj = MagicTools.create_instance_of_item(i.cls_name)
+                item_obj = MagicTools.create_instance_of_item(i.item_file)
                 msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n{item_obj.description}'
             except Exception:
                 pass

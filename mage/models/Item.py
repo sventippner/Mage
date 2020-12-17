@@ -17,9 +17,8 @@ class Item(Document):
     :param is_shop_item: boolean, is listed in shop
     """
 
-    # id = IntField()
     name = StringField(unique=True)
-    cls_name = StringField(required=True)
+    item_file = StringField(required=True)
 
     price = IntField(default=0, required=True)
     use_cost = IntField()

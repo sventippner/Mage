@@ -53,7 +53,7 @@ class OnReady:
                             price=item.price,
                             description=item.description,
                             brief=item.brief,
-                            cls_name=item.cls_name,
+                            item_file=item_file,
                             # level_restriction=item.level_restriction
                         )
                         i.save_this(
@@ -61,7 +61,7 @@ class OnReady:
                             price=item.price,
                             description=item.description,
                             brief=item.brief,
-                            cls_name=item.cls_name
+                            item_file=item_file
                         )
 
                         print("success")

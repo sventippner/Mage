@@ -32,6 +32,6 @@ class Profile:
         if user.items:
             msg += f"\n\n**Items:**"
             for item in user.items:
-                msg += f"\n\t{item}"
+                msg += f"\n\t{item} ({user.items[item]})"
 
         return msg

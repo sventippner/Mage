@@ -12,7 +12,7 @@ class Points(commands.Cog):
 
     @commands.command(aliases=BuyItem.aliases, brief=BuyItem.brief, description=BuyItem.description)
     @commands.check(IsGuildMessage.is_guild_message)
-    async def buyitem(self, context, item_name):
+    async def buyitem(self, context, *, item_name):
         await BuyItem.call(context, item_name)
 
     @commands.command(aliases=Shop.aliases, brief=Shop.brief, description=Shop.description)

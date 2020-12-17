@@ -17,9 +17,9 @@ class User(Document):
     discord_guild_id = IntField()
 
     points = LongField(default=0)
-    # items = ListField(IntField(), default=[])
-    # items = DictField(default={})
-    items = ListField(StringField())
+
+    items = DictField(default={})
+
     pvp_status = IntField(default=0)
     health = IntField(default=100)
 
@@ -100,18 +100,18 @@ class User(Document):
                 return True
         return False
 
-    def obtain_item(self, item_id: int, *, amount=1):
-        if str(item_id) in self.items.keys():
-            self.items[str(item_id)] += amount
+    def obtain_item(self, item_name, *, amount=1):
+        if str(item_name) in self.items.keys():
+            self.items[str(item_name)] += amount
         else:
-            self.items[str(item_id)] = amount
+            self.items[str(item_name)] = amount
 
-    def lose_item(self, item_id: int, *, amount=1):
-        if str(item_id) in self.items.keys():
-            if self.items[str(item_id)] >= amount + 1:
-                self.items[str(item_id)] -= amount
+    def lose_item(self, item_name, *, amount=1):
+        if str(item_name) in self.items.keys():
+            if self.items[str(item_name)] >= amount + 1:
+                self.items[str(item_name)] -= amount
             else:
-                self.items.pop(str(item_id))
+                self.items.pop(str(item_name))
 
     def __str__(self):
         return f"User ID:{self.discord_user_id} ({self.points} Points) (Items: {self.items})"

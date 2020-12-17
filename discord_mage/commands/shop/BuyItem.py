@@ -60,7 +60,7 @@ class BuyItem:
             if user.points <= item.price:
                 return f"Not sufficient {server.points_name} to buy {item.name}"
             else:
-                user.items.append(item.name)
+                user.obtain_item(item_name, amount=1)
                 user.points -= item.price
                 user.save()
                 return f"{item.name} bought."

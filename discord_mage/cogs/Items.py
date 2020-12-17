@@ -14,8 +14,9 @@ class Items(commands.Cog):
 
     @commands.group(aliases=Use.aliases, brief=Use.brief, description=Use.description)
     @commands.check(IsGuildMessage.is_guild_message)
-    async def use(self, context, item_name):
-        await Use.call(context, item_name)
+    async def use(self, context):
+        if context.invoked_subcommand is None:
+            await Use.call(context)
 
     @use.command(aliases=TestItem.aliases, brief=TestItem.brief, description=TestItem.description)
     @commands.check(IsGuildMessage.is_guild_message)
