@@ -40,29 +40,36 @@ class BuyItem:
     @staticmethod
     async def call(context, item_name):
         """ this function is executed by a discord message """
-        # item = data_access.find_one(Item, name=item_name)
-
         user = data_access.find_user_by_discord_message(context.message)
         server = data_access.find_one(Server, discord_guild_id=context.guild.id)
 
-        result = BuyItem.action_buy_item(server, user, item_name)
+        result = BuyItem.action_buy_item(server, user, item_name, context.message.author.mention)
 
         await context.send(result)
 
 
     @staticmethod
-    def action_buy_item(server, user, item_name):
-        item = data_access.find_one(Item, name=item_name)
-        if not item:
+    def action_buy_item(server, user, item_name, mention=None):
+        item = data_access.find_one(Item, name=item_name, is_shop_item=True, is_enabled=True)
+        if not item or not item.is_enabled:
             return f"Item not found."
 
+        if not item.is_shop_item:
+            return f"Item is not available."
+
         try:
+            if not item.is_consumable and user.has_item(item.name):
+                return "You already own this item."
+
             if user.points <= item.price:
                 return f"Not sufficient {server.points_name} to buy {item.name}"
             else:
                 user.obtain_item(item_name, amount=1)
                 user.points -= item.price
                 user.save()
-                return f"{item.name} bought."
+
+                if not mention:
+                    mention = user.name
+                return f"{mention} bought {item.name}."
         except:
             return f"Could not buy item."

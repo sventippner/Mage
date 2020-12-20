@@ -30,8 +30,7 @@ class Shop:
 
     @staticmethod
     def action_list_shop_items():
-        # items = data_access.find(Item, is_shop_item=True)
-        items = data_access.find(Item)
+        items = data_access.find(Item, is_shop_item=True, is_enabled=True)
 
         if not items:
             return "Our shop is sold out."
@@ -40,7 +39,9 @@ class Shop:
         for i in items:
             try:
                 item_obj = MagicTools.create_instance_of_item(i.item_file)
-                msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n{item_obj.description}'
+
+                if item_obj.is_enabled and item_obj.is_shop_item:
+                    msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n{item_obj.description}'
             except Exception:
                 pass
 

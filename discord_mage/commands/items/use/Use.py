@@ -9,5 +9,5 @@ class Use:
 
     @staticmethod
     async def call(context):
-        msg = "Todo"
-        await context.send(msg)
+        pass
+        # await context.send("Use item")

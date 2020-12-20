@@ -8,8 +8,6 @@ import utils.data_access as data
 
 class ChannelLicense(Item):
     # overriden attributes
-    id = 1 #
-    cls_name = "ChannelLicense"
     name = "Channel_License"
     brief = 'item, which creates a server Category with 3 default channels'
     description = 'creates a server category with 3 default channels. Channel and Category Names depend on the custom name you choose'

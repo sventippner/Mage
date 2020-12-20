@@ -15,11 +15,15 @@ class Profile:
         user = data_access.find_user_by_discord_message(context.message)
         server = data_access.find_one(Server, discord_guild_id=context.guild.id)
 
-        await context.send(Profile.action(server, user))
+        await context.send(Profile.action(server, user, mention=context.message.author.mention))
 
     @staticmethod
-    def action(server, user):
-        msg = f"Level: **{user.level}**"
+    def action(server, user, mention=None):
+        if not mention:
+            mention = user.name
+        msg = f"{mention}\n"
+
+        msg += f"Level: **{user.level}**"
         if user.level == User.max_level:
             msg += " (MAX)"
 

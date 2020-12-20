@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord_mage.commands.items.TestItem import TestItem
 from discord_mage.commands.items.Dice import Dice
 from discord_mage.commands.items.use.Use import Use
 from discord_mage.permissions.IsGuildMessage import IsGuildMessage
@@ -17,11 +16,6 @@ class Items(commands.Cog):
     async def use(self, context):
         if context.invoked_subcommand is None:
             await Use.call(context)
-
-    @use.command(aliases=TestItem.aliases, brief=TestItem.brief, description=TestItem.description)
-    @commands.check(IsGuildMessage.is_guild_message)
-    async def testitem(self, context, target: discord.Member, amount: int = 0):
-        await TestItem().call(context, target, amount)
 
     @use.command(aliases=Dice.aliases, brief=Dice.brief, description=Dice.description)
     @commands.check(IsGuildMessage.is_guild_message)
