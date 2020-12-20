@@ -65,7 +65,7 @@ class Item(Document):
             cls.is_enabled and
             user.points >= cls.use_cost and
             user.level >= cls.level_restriction and
-            user.has_item(cls.id)
+            user.has_item(cls.name)
         ):
             return True
         return False

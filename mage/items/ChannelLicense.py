@@ -44,7 +44,7 @@ class ChannelLicense(Item):
         if ok:
             cls.pay_use_cost(user)
             if cls.is_consumable:
-                user.lose_item(cls.id)
+                user.lose_item(cls.name)
             user.save()
             await ChannelLicense.action_is_ok(context, guild, name)
         else:
