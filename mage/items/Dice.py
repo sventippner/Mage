@@ -9,7 +9,6 @@ import utils.data_access as data
 
 class Dice(Item):
     # overriden attributes
-    id = 2
     name = "Dice"
     brief = 'role a dice'
     description = 'role a dice and gain or loose points'
@@ -23,7 +22,7 @@ class Dice(Item):
     is_event_item = False
     is_shop_item = True
 
-    Item.append_categories(categories, is_consumable, level_restriction)
+    Item.append_categories(categories, is_consumable, is_event_item, level_restriction)
 
     def __init__(self, *args, **kwargs):
         super(Item, self).__init__(*args, **kwargs)
@@ -33,7 +32,7 @@ class Dice(Item):
         pass
 
     @classmethod
-    async def on_use(cls, context, name):
+    async def on_use(cls, context):
         user = data.find_one(User, discord_user_id=context.author.id, discord_guild_id=context.guild.id)
         user.name = context.author.display_name
         guild = context.guild
@@ -41,30 +40,25 @@ class Dice(Item):
         if user.points - Dice.use_cost < 0:
             Dice.action_is_not_ok(guild)
         else:
-            Dice.action_is_ok(user, context)
+            await Dice.action_is_ok(user, context)
 
 
     @staticmethod
     async def action_is_ok(user, context):
+        amount = 0
+
         role_result = randint(1, 6)
         if role_result == 6:
             amount = 100
-            user.points = user.points + amount
-            user.save()
-            Dice.action_success(context, user, role_result)
-
         if 4 < role_result < 6:
             amount = 40
-            user.points = user.points + amount
-            user.save()
-            Dice.action_success(context, user, role_result)
-
         if role_result < 4:
             amount = 0
-            user.points = user.points + amount
-            user.save()
-            Dice.action_success(context, user, role_result)
 
+        user.points = user.points + amount - Dice.use_cost
+        user.save()
+        msg = Dice.action_success(context, user, role_result)
+        await context.send(msg)
 
     @staticmethod
     def action_success(context, user, role_result):

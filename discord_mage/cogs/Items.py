@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
-from discord_mage.commands.items.Dice import Dice
 from discord_mage.commands.items.use.Use import Use
 from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 from mage.items.ChannelLicense import ChannelLicense
+from mage.items.Dice import Dice
 
 
 class Items(commands.Cog):
@@ -17,10 +17,10 @@ class Items(commands.Cog):
         if context.invoked_subcommand is None:
             await Use.call(context)
 
-    @use.command(aliases=Dice.aliases, brief=Dice.brief, description=Dice.description)
+    @use.command(brief=Dice.brief, description=Dice.description)
     @commands.check(IsGuildMessage.is_guild_message)
     async def dice(self, context):
-        await Dice().call(context)
+        await Dice().on_use(context)
 
     @use.command(brief=ChannelLicense.brief, description=ChannelLicense.description)
     @commands.check(IsGuildMessage.is_guild_message)
