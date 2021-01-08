@@ -40,7 +40,7 @@ class Coin(Item):
         if user.points - Coin.use_cost < 0:
             Coin.action_is_not_ok(guild)
         else:
-            Coin.action_is_ok(user, context)
+            await Coin.action_is_ok(user, context)
 
 
     @staticmethod
@@ -48,14 +48,13 @@ class Coin(Item):
         role_result = randint(1, 2)
         if role_result == 1:
             amount = 100
-            user.points = user.points + amount
-            user.save()
-            Coin.action_success(context, user, role_result)
         else:
             amount = 0
-            user.points = user.points + amount
-            user.save()
-            Coin.action_success(context, user, role_result)
+
+        user.points = user.points + amount - Coin.use_cost
+        user.save()
+        msg = Coin.action_success(context, user, role_result)
+        await context.send(msg)
 
     @staticmethod
     def action_success(context, user, role_result):

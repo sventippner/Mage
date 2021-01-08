@@ -4,6 +4,7 @@ from discord_mage.commands.items.use.Use import Use
 from discord_mage.permissions.IsGuildMessage import IsGuildMessage
 from mage.items.ChannelLicense import ChannelLicense
 from mage.items.Dice import Dice
+from mage.items.Coin import Coin
 
 
 class Items(commands.Cog):
@@ -21,6 +22,11 @@ class Items(commands.Cog):
     @commands.check(IsGuildMessage.is_guild_message)
     async def dice(self, context):
         await Dice().on_use(context)
+
+    @use.command(brief=Coin.brief, description=Coin.description)
+    @commands.check(IsGuildMessage.is_guild_message)
+    async def coin(self, context):
+        await Coin().on_use(context)
 
     @use.command(brief=ChannelLicense.brief, description=ChannelLicense.description)
     @commands.check(IsGuildMessage.is_guild_message)
