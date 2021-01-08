@@ -40,7 +40,6 @@ class OnReady:
     def action_initialize_item_database(force_init=False):
         print("Initializing item database")
         item_list = MagicTools.get_files_in_dir("/mage/items")
-
         for item_file in item_list:
             item = MagicTools.create_instance_of_item(item_file)
             if item:

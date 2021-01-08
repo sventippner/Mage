@@ -1,7 +1,9 @@
 import discord
+from datetime import datetime
 
 from mage.models.Event import Event
 from mage.models.User import User
+from mage.models.XPMultiplier import XPMultiplier
 from utils import data_access
 
 
@@ -24,7 +26,14 @@ class OnMessage:
 
     @staticmethod
     def action_increase_user_points(user):
-        user.points += OnMessage.points_per_message
+        xp_multiplier = data_access.find_one(XPMultiplier, discord_guild_id=user.discord_guild_id, discord_user_id=user.discord_user_id)
+        multiplier = 1
+        if xp_multiplier:
+            if xp_multiplier.end_date > datetime.now():
+                multiplier = xp_multiplier.multiplier
+            else:
+                xp_multiplier.delete_this()
+        user.points += (OnMessage.points_per_message * multiplier)
         user.save_this(set__points=user.points)
 
     @staticmethod
