@@ -22,7 +22,7 @@ class Coin(Item):
     is_event_item = False
     is_shop_item = True
 
-    Item.append_categories(categories, is_consumable, level_restriction)
+    Item.append_categories(categories, is_consumable, is_event_item, level_restriction)
 
     def __init__(self, *args, **kwargs):
         super(Item, self).__init__(*args, **kwargs)
@@ -32,7 +32,7 @@ class Coin(Item):
         pass
 
     @classmethod
-    async def on_use(cls, context, name):
+    async def on_use(cls, context):
         user = data.find_one(User, discord_user_id=context.author.id, discord_guild_id=context.guild.id)
         user.name = context.author.display_name
         guild = context.guild

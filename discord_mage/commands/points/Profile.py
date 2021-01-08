@@ -1,6 +1,7 @@
 from mage.models.Item import Item
 from mage.models.Server import Server
 from mage.models.User import User
+from mage.models.XPMultiplier import XPMultiplier
 from utils import data_access
 
 
@@ -32,6 +33,13 @@ class Profile:
         if user.level < User.max_level:
             points_needed = User.level_generator[user.level + 1] - user.points
             msg += f"\n{server.points_name} needed for Level-Up: {points_needed}"
+
+        xp_boost = data_access.find_one(XPMultiplier, discord_user_id=user.discord_user_id, discord_guild_id=user.discord_guild_id)
+        if xp_boost:
+            msg += f"\n\n**Point Boost activated:**"
+            msg += f"\nMultiplier: {xp_boost.multiplier}"
+            msg += f"\nEnds On: {xp_boost.end_date.strftime('%m/%d/%Y, %H:%M:%S')}"
+            print(type(xp_boost.end_date))
 
         if user.items:
             msg += f"\n\n**Items:**"
