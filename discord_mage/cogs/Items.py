@@ -8,6 +8,7 @@ from mage.items.PointBoost import PointBoost
 from mage.items.PointBoost2x7days import PointBoost2x7days
 from mage.items.PointBoost2x30days import PointBoost2x30days
 from mage.items.PointBoost4x1day import PointBoost4x1day
+from mage.items.Coin import Coin
 
 
 class Items(commands.Cog):
@@ -25,6 +26,11 @@ class Items(commands.Cog):
     @commands.check(IsGuildMessage.is_guild_message)
     async def dice(self, context):
         await Dice().on_use(context)
+
+    @use.command(brief=Coin.brief, description=Coin.description)
+    @commands.check(IsGuildMessage.is_guild_message)
+    async def coin(self, context):
+        await Coin().on_use(context)
 
     @use.command(brief=ChannelLicense.brief, description=ChannelLicense.description)
     @commands.check(IsGuildMessage.is_guild_message)
