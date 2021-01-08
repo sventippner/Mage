@@ -17,7 +17,7 @@ class Coin(Item):
     level_restriction = 0
 
     categories = ["Gamble"]
-    is_consumable = True
+    is_consumable = False
     is_enabled = True
     is_event_item = False
     is_shop_item = True

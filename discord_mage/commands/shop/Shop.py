@@ -41,7 +41,10 @@ class Shop:
                 item_obj = MagicTools.create_instance_of_item(i.item_file)
 
                 if item_obj.is_enabled and item_obj.is_shop_item:
-                    msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**\nRequired level to use: <todo: level_restriction> \n{item_obj.description}'
+                    msg += f'\n\n**{item_obj.name}\tprice: {item_obj.price}**'
+                    if item_obj.level_restriction > 0:
+                        msg += f'\nRequired level to use: {item_obj.level_restriction}'
+                    msg += f'\n{item_obj.description}'
             except Exception:
                 pass
 

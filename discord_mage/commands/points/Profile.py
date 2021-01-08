@@ -39,7 +39,6 @@ class Profile:
             msg += f"\n\n**Point Boost activated:**"
             msg += f"\nMultiplier: {xp_boost.multiplier}"
             msg += f"\nEnds On: {xp_boost.end_date.strftime('%m/%d/%Y, %H:%M:%S')}"
-            print(type(xp_boost.end_date))
 
         if user.items:
             msg += f"\n\n**Items:**"
