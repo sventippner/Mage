@@ -35,7 +35,7 @@ class Shop:
         if not items:
             return "Our shop is sold out."
 
-        msg = "Use the command `buyitem <id>` to buy an item from the shop."
+        msg = "Use the command `buyitem <name>` to buy an item from the shop."
         for i in items:
             try:
                 item_obj = MagicTools.create_instance_of_item(i.item_file)
