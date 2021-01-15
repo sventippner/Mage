@@ -14,6 +14,9 @@ class Profile:
     async def call(context):
         """ this function is executed by a discord message """
         user = data_access.find_user_by_discord_message(context.message)
+        if not user:
+            user = User.from_discord(context.author.id, context.guild.id)
+            user.save()
         server = data_access.find_one(Server, discord_guild_id=context.guild.id)
 
         await context.send(Profile.action(server, user, mention=context.message.author.mention))
