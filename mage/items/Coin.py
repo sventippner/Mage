@@ -37,10 +37,10 @@ class Coin(Item):
         user.name = context.author.display_name
         guild = context.guild
 
-        if Item.pre_use(cls, user):
-            Coin.action_is_ok(user, context)
+        if Coin.pre_use(user):
+            await Coin.action_is_ok(user, context)
         else:
-            await Coin.action_is_not_ok(guild)
+            await context.send(Coin.action_is_not_ok(guild))
 
 
     @staticmethod

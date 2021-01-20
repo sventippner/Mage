@@ -2,9 +2,11 @@ from mongoengine import IntField, ReferenceField
 import discord
 
 from mage.models.Item import Item
+from mage.models.Server import Server
 from mage.models.User import User
 from random import randint
 import utils.data_access as data
+from utils import data_access
 
 
 class Dice(Item):
@@ -37,10 +39,10 @@ class Dice(Item):
         user.name = context.author.display_name
         guild = context.guild
 
-        if Item.pre_use(cls, user):
-            Dice.action_is_ok(user, context)
+        if Dice.pre_use(user):
+            await Dice.action_is_ok(user, context)
         else:
-            await Dice.action_is_not_ok(guild)
+            await context.send(Dice.action_is_not_ok(guild))
 
 
     @staticmethod
@@ -67,4 +69,5 @@ class Dice(Item):
 
     @staticmethod
     def action_is_not_ok(guild):
-        return f"You do not have enough {guild.points_name}! You need at least {Dice.use_cost}"
+        server = data_access.find_one(Server, discord_guild_id=guild.id)
+        return f"You do not have enough {server.points_name}! You need at least {Dice.use_cost}"
