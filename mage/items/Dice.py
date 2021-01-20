@@ -37,10 +37,10 @@ class Dice(Item):
         user.name = context.author.display_name
         guild = context.guild
 
-        if user.points - Dice.use_cost < 0:
-            Dice.action_is_not_ok(guild)
+        if Item.pre_use(cls, user):
+            Dice.action_is_ok(user, context)
         else:
-            await Dice.action_is_ok(user, context)
+            await Dice.action_is_not_ok(guild)
 
 
     @staticmethod
