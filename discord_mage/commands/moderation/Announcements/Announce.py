@@ -24,4 +24,4 @@ class Announce:
 
     @staticmethod
     def action_no_announcement_channel():
-        return f'An announcement channel has not been set yet.\nPlease set an announcement channel with `{DEFAULT_PREFIX}set_announcement_channel` and try again.'
+        return f'An announcement channel has not been set yet.\nPlease set an announcement channel with `{DEFAULT_PREFIX}set announcementchannel` and try again.'

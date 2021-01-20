@@ -24,7 +24,7 @@ class Event(Document):
     participating_roles = EmbeddedDocumentListField(ParticipatingRole)
 
     # multiple rewards possible
-    rewards = ListField(IntField())
+    rewards = ListField(StringField())
 
     def __init__(self, discord_guild_id=None, name="Custom Event", start_date=datetime.now(),
                  end_date=datetime.now() + timedelta(days=7), rewards=None, participating_roles=None,

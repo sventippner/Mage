@@ -10,18 +10,18 @@ class OnCommandError:
 
         if isinstance(error, commands.CommandNotFound):
             await context.send(OnCommandError.action_command_not_found(mention))
-        # elif isinstance(error, commands.MissingRequiredArgument):
-        #     await context.send(OnCommandError.action_missing_required_argument(mention))
-        # elif isinstance(error, commands.MissingPermissions):
-        #     await context.send(OnCommandError.action_missing_permissions(mention))
-        # elif isinstance(error, commands.CheckFailure):
-        #     await context.send(OnCommandError.action_check_failure(mention))
-        # elif isinstance(error, commands.BadArgument):
-        #     await context.send(OnCommandError.action_is_bad_argument(mention))
-        # elif isinstance(error, commands.CommandInvokeError):
-        #     await context.send(OnCommandError.action_command_invoke_error(mention))
-        # elif isinstance(error, commands.ExpectedClosingQuoteError) or isinstance(error, commands.UnexpectedQuoteError):
-        #     await context.send(OnCommandError.action_quote_error(mention))
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await context.send(OnCommandError.action_missing_required_argument(mention))
+        elif isinstance(error, commands.MissingPermissions):
+            await context.send(OnCommandError.action_missing_permissions(mention))
+        elif isinstance(error, commands.CheckFailure):
+            await context.send(OnCommandError.action_check_failure(mention))
+        elif isinstance(error, commands.BadArgument):
+            await context.send(OnCommandError.action_is_bad_argument(mention))
+        elif isinstance(error, commands.CommandInvokeError):
+            await context.send(OnCommandError.action_command_invoke_error(mention))
+        elif isinstance(error, commands.ExpectedClosingQuoteError) or isinstance(error, commands.UnexpectedQuoteError):
+            await context.send(OnCommandError.action_quote_error(mention))
         else:
             # raise all other errors
             OnCommandError.action_raise_error(error)

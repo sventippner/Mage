@@ -5,6 +5,7 @@ from utils.data_access import find_one
 
 
 class StartEvent:
+    # DEPRECATED USE START OR NOW
     aliases = []
     brief = "starts custom event"
     description = "starts a custom event with a specified reward"
