@@ -5,8 +5,8 @@ from utils import data_access
 
 class SetServerWelcomeMessage:
     aliases = []
-    brief = ""
-    description = ""
+    brief = "activates or deactivates server welcoming messages"
+    description = "activates or deactivates server welcoming messages. Use parameter 'on' or 'off'"
 
     @staticmethod
     async def call_custom_server_welcome_messages(context, value):

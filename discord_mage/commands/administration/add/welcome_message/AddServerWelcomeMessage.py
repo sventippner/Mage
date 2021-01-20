@@ -5,8 +5,8 @@ from utils import data_access
 
 class AddServerWelcomeMessage:
     aliases = []
-    brief = ""
-    description = ""
+    brief = "adds server welcome message variant"
+    description = "adds text of the corresponding message ID to the pool of random server welcoming messages"
 
     @staticmethod
     async def call_custom_server_welcome_message(context, message_id: int):

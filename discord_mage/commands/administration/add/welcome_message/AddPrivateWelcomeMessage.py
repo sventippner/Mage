@@ -5,8 +5,8 @@ from utils import data_access
 
 class AddPrivateWelcomeMessage:
     aliases = []
-    brief = ""
-    description = ""
+    brief = "adds private welcome message variant"
+    description = "adds text of the corresponding message ID to the pool of random private welcoming messages"
 
     @staticmethod
     async def call_custom_private_welcome_message(context, message_id: int):

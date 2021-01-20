@@ -6,8 +6,8 @@ from utils import data_access
 
 class SetPrivateWelcomeMessage:
     aliases = []
-    brief = ""
-    description = ""
+    brief = "activates or deactivates private welcoming messages"
+    description = "activates or deactivates private welcoming messages. Use parameter 'on' or 'off'"
 
     @staticmethod
     async def call_custom_private_welcome_messages(context, value):

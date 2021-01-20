@@ -6,8 +6,8 @@ from utils import data_access
 
 class SetAutorole:
     aliases = []
-    brief = ""
-    description = ""
+    brief = "sets roles, which members automatically join upon joining the server"
+    description = "sets roles, which members automatically join upon joining the server"
 
     @staticmethod
     async def call_autorole(context, roles):
