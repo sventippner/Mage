@@ -10,8 +10,8 @@ import utils.data_access as data
 class Dice(Item):
     # overriden attributes
     name = "Dice"
-    brief = 'role a dice'
-    description = 'role a dice and gain or loose points'
+    brief = 'rolls a dice'
+    description = 'rolls a dice to gain or lose points'
     price = 500
     use_cost = 60
     level_restriction = 0

@@ -33,9 +33,7 @@ from utils.MagicTools import get_item_list
 class BuyItem:
     aliases = []
     brief = 'buys item from shop'
-    description = "buys item from shop with the corresponding ID. " \
-                  "Use {DEFAULT_PREFIX}shop to list all availableitems. " \
-                  "Example: {DEFAULT_PREFIX}buyitem 1 "
+    description = "buys item from shop with the corresponding name."
 
     @staticmethod
     async def call(context, item_name):

@@ -89,10 +89,10 @@ class User(Document):
                 return level
         return level
 
-    def has_item(self, item_name: int, *, amount=1):
+    def has_item(self, item_name, *, amount=1):
         """ Checks if user has the item
 
-        :param item_id: item id
+        :param item_name: item id
         :return: Boolean
         """
         if str(item_name) in self.items.keys():

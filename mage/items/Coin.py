@@ -10,8 +10,8 @@ import utils.data_access as data
 class Coin(Item):
     # overriden attributes
     name = "Coin"
-    brief = 'flip a Coin'
-    description = 'flip a Coin and gain or loose points'
+    brief = 'flips a coin'
+    description = 'flips a coin to gain or lose points'
     price = 500
     use_cost = 60
     level_restriction = 0
