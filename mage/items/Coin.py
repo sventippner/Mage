@@ -11,7 +11,7 @@ class Coin(Item):
     # overriden attributes
     name = "Coin"
     brief = 'flip a Coin'
-    description = 'flip a Coin and gain or loose points'
+    description = 'flip a Coin and gain or lose points'
     price = 500
     use_cost = 60
     level_restriction = 0
@@ -28,19 +28,20 @@ class Coin(Item):
         super(Item, self).__init__(*args, **kwargs)
 
     @staticmethod
-    def on_buy():
+    def on_buy(context):
         pass
 
     @classmethod
     async def on_use(cls, context):
         user = data.find_one(User, discord_user_id=context.author.id, discord_guild_id=context.guild.id)
         user.name = context.author.display_name
+
         guild = context.guild
 
-        if user.points - Coin.use_cost < 0:
-            Coin.action_is_not_ok(guild)
+        if Item.pre_use(cls, user):
+            Coin.action_is_ok(user, context)
         else:
-            await Coin.action_is_ok(user, context)
+            await Coin.action_is_not_ok(guild)
 
 
     @staticmethod
@@ -58,9 +59,17 @@ class Coin(Item):
 
     @staticmethod
     def action_success(context, user, role_result):
-        return f"{context.author.display_name} roled a {role_result}. It's getting better and better." \
+        if role_result == 1:
+            return f"{context.author.display_name} flipped head. That's a win." \
                f" Your points now: {user.points}"
+        else:
+            return f"{context.author.display_name} flipped tail. That's a lose." \
+               f" Your points now: {user.points}"
+
+
+
+
 
     @staticmethod
     def action_is_not_ok(guild):
-        return f"You do not have enough {guild.points_name}! You need at least {Coin.use_cost}"
+        return "You dont meet the Requirements or you have used invalid arguments"
