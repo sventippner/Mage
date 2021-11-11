@@ -1,6 +1,12 @@
 # Mage
 Discord Bot for Moderation, Adventures, Games and Events.
 
+**Developed by:**
+ * [Sven Tippner](https://github.com/sventippner)
+ * [Martin Ludwig](https://github.com/Martin-Ludwig)
+ * [Tom Gr.](https://github.com/Tom-G-r)
+ * [Chantal FP.](https://github.com/chantalfp)
+
 **Setup**
 
 1. Python project
